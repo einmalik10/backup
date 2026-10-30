@@ -12,7 +12,7 @@ Aktualisiert wird vom Windows-PC mit `python webdesign/zentrale_sync.py` (Spiege
 
 ## Auf dem MacBook
 ```
-git clone https://github.com/xaloH/malik-zentrale.git ~/zentrale
+git clone https://github.com/einmalik10/backup.git ~/zentrale
 cp -R ~/zentrale/skills/* ~/.claude/skills/
 ```
 Arbeit des Mac-Agenten auf einem eigenen Zweig (`git switch -c mac-<thema>`), nicht direkt auf `main`.
