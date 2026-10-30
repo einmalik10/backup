@@ -1,0 +1,173 @@
+# Claude-Log
+
+> Was Claude wann im Tresor geändert hat. Neueste oben.
+
+- 2026-10-12 · Loretto · Learning zur Zwei-Klick-Karte ergänzt
+- 2026-10-12 · Loretto · Learning zu gesperrten Dateien beim Website-Build ergänzt
+- 2026-10-12 · Loretto · nur Log: „Bekannte Gesichter“ als ein Abschnitt zusammengeführt
+- 2026-10-12 · Loretto · nur Log: Abschnitt „Momente“ (3 Begegnungen) auf der Website ergänzt
+- 2026-10-12 · Loretto · nur Log: Jubiläumsfilm mit lizenzfreier Musik (Pixabay) neu vertont
+- 2026-10-12 · Loretto · Projektnotiz unverändert; nur Log (Galerie gekürzt, Abschnitt „Wo alles angefangen hat“ auf der Website)
+- 2026-10-12 · Loretto · Learning zu Musikrechten im Film ergänzt
+- 2026-10-12 · Loretto · Learning zu parallelen Sitzungen ergänzt (Fotos/Film eingebaut)
+- 2026-10-12 · Loretto · Learning zur eigenen Domain loretto-markt.de, Impressum im Projekt abgehakt
+- 2026-10-12 · Loretto · Domains als gekauft abgehakt
+- 2026-10-11 · Loretto · Entscheidungen (Kasse iFade, Stempelkarte zurückgestellt, Grundpreis) im Projekt eingetragen
+- 2026-10-11 · Loretto · Projekt „Loretto Website und App“ angelegt, Bereich ergänzt, 3 Learnings und 1 Prozess eingetragen
+- 2026-10-11 · Second Brain · Tresor in Obsidian eingehängt (vorher war der leere Standard-Tresor offen), Core-Plugins übernommen
+
+- 2026-10-11 · Webdesign · Startskript fürs Dashboard gebaut, Prozess als umgesetzt markiert, Learning zu Ports ergänzt
+
+- 2026-10-11 · Second Brain · Learnings und Prozesse angelegt, Ordner `08 Claude-Log`, Regeln in `CLAUDE.md`, globale Regel für alle Projekte
+- 2026-10-11 · Second Brain · Tresor aufgebaut aus 3 Fragerunden: Profil, Werte, Stärken, Routine, Bereiche, Projekte, Vorlagen
+- 2026-10-13 · Webdesign · Learnings (Hoster-Blockade, Gemeindegrenzen, Websuche-Limit, Läden ohne Website), 2 Prozesse, Projektstand Webdesign ergänzt
+- 2026-10-13 · Webdesign · Import-Dateien „ohne-website-warm.json“ für alle 3 Dashboards erstellt (keine Tresor-Inhalte geändert)
+- 2026-10-13 · Webdesign · Learning zu Maps-Routen (10-Stopp-Limit), Prozess „Besuchsroute planen“ als umgesetzt ergänzt
+- 2026-10-13 · Webdesign · Learning zu Karten-PDF (OpenStreetMap statt Google) ergänzt
+- 2026-10-13 · Webdesign · Route + Karten-PDF für Reutlingen/Metzingen gebaut, `route_bauen.py` kann jetzt nach Orten filtern (keine Tresor-Inhalte geändert)
+- 2026-10-13 · Ich · Inbox-Notiz „Entscheidung Webdesign oder Bau“ mit offenen Fragen angelegt
+- 2026-10-13 · Ich · Nachtrag Vermittler-Modell in „Entscheidung Webdesign oder Bau“
+- 2026-10-16 · Webdesign · 5 Learnings (Cloudflare Pages, Video-Limit, unbenutzte Dateien, Opera, DNS-Freigabe) und 1 Prozess (automatisches Hochladen) ergänzt
+- 2026-10-16 · Webdesign · Prozess „Wochenprospekt in Website übertragen“ ergänzt
+- 2026-10-17 · Webdesign · Kunden-Entwurf aus GitHub-Repo `Projekte-mit-Malik` nach `C:\Users\Malik\Projekte-mit-Malik` geklont und lokal im App-Browser geöffnet (keine Tresor-Inhalte geändert)
+- 2026-10-17 · Webdesign · 4 Learnings (Freistellen, WebGL und file://, Animation bei niedriger Bildrate, gedrosselter App-Browser) und 1 Prozess (Autos freistellen) ergänzt
+- 2026-10-18 · Webdesign · Autohof-Änderungen im Kundenrepo auf Branch committet (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · Entwurfs-PDF Desktop/Handy gebaut; 1 Learning (Playwright ohne SwiftShader) und 1 Prozess (Entwurf als PDF) ergänzt
+- 2026-10-18 · Webdesign · Kunden-Hero auf echte Fotos umgebaut, Autohof gekürzt, auf Branch committet (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · 2 Learnings (Video-Test mit Edge, HTTP-Range; Löschflächen am fertigen Bild) ergänzt
+- 2026-10-18 · Webdesign · Purosangue in den Hero statt in den Autohof, auf Kundenbranch committet (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · 2 Learnings (symmetrischer Autohof, Texte alter Seite prüfen) ergänzt
+- 2026-10-18 · Webdesign · Hero-Scheinwerfer-Animation im Kundenprojekt gebaut (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · Hero-Auftritt mit Zündung und Lichthupe im Kundenprojekt (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · Kundenentwurf in fünf Seiten aufgeteilt (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · Navigation im Kundenentwurf angepasst (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · Werkstatt-Formular und Autohof ohne Instagram im Kundenentwurf (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · Autohof auf die Fahrzeugseite verschoben (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Webdesign · 1 Learning (Marken-Laufband) ergänzt
+- 2026-10-18 · Webdesign · 3D-Einzelansicht verworfen, Klick auf Autos im Autohof abgeschaltet (keine Tresor-Inhalte geändert)
+- 2026-10-18 · Bachelorarbeit · Kurzfassung-PDF erstellt, Projektnotiz um Abgabedatum und Kernergebnis ergänzt
+- 2026-10-18 · Bachelorarbeit · Kurzfassung-PDF um eine ausführliche zweite Seite erweitert (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Bachelorarbeit · 3 Learnings (Annahme prüfen, SHAP bei tiefen Bäumen, Windows/Python), Projektnotiz um Feature-Analyse ergänzt
+- 2026-10-19 · Webdesign · Kunden-Website: täglicher Fahrzeug-Abruf vorbereitet (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · BC-Seite lokal gestartet, 1 Learning (launch.json-Port)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Startskript repariert, 1 Learning (.bat und /dev/null)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Platzhalter-Showreel erzeugt (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Kontaktdaten und Domain eingetragen (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · Kunden-Website nach Vorlage-Video neu aufgebaut, auf Branch committet (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Carbon-Space-Look statt Schwarz (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · Kunden-Website hochwertiger gestaltet, Karte und Filter-Vorschläge, auf Branch committet (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Chat-Assistent im Handy-Look mit WhatsApp-Weiterleitung (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Porträt bei Über mich eingesetzt (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite lokal gestartet, Git-Repo angelegt und erster Commit (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite zu GitHub (einmalik10/Mi-Visuals) hochgeladen (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Animationen und Live-Projekte; 2 Learnings ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals-Seite: Luxus-Sport-Look (Serifen-Akzente, Metall-Gold) (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals: Unterseite webseiten.html nach Vorbild dd-muc.de (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals: Cache-Busting; 1 Learning ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals: Performance verbessert; 2 Learnings ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals: 6 Commits zu GitHub gepusht (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · MI-Visuals: Showreel aus Salam-Film geschnitten, gepusht (keine Tresor-Inhalte geändert)
+- 2026-10-19 · Webdesign · Projektnotiz „MI Visuals Website“ angelegt; Region auf Seite nur Stuttgart
+- 2026-10-19 · Webdesign · Learning zu KI-Hochrechnung (Real-ESRGAN, schwarze Bilder, Hänger) ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals: Showreel auf Full HD verbessert; 1 Learning, 1 Projektschritt ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals: Pause-Knopf, Qualitäts-Check + Fixes; 1 Learning, 1 Prozess, Projektschritte ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals: Gold → Rot; Projektnotiz und 1 Learning ergänzt
+- 2026-10-19 · Webdesign · MI-Visuals: Rot wieder auf Gold zurück; Projektnotiz angepasst
+- 2026-10-19 · Webdesign · Demo + Pitch-Mappe für eine Tanzschule (Tübingen); 3 Learnings, 1 Prozess, Projektschritt ergänzt
+- 2026-10-20 · Webdesign · Autohaus-Demo: Bestands-Hinweisband nur auf Desktop, auf dem Handy ausgeblendet
+- 2026-10-20 · Webdesign · Autohaus-Entwurf zur neutralen Vorlage gemacht (freie Fotos, Platzhalter-Logo, Portfolio-Bilder); 1 Learning, 1 Prozess, Projektschritt ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals: Autohaus-Karte statt BC, Reservierungs-Demo (Datum ab heute, 1/3/5/8+), netcup-ZIP; Projektnotiz, 1 Learning, 1 Prozess ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals: Autohaus-Karte mit Scroll-Animation der ganzen Seite; 1 Learning, Projektnotiz ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals: Kontaktformular in Schritten; 1 Learning, Projektnotiz ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals: Reservierungs-Demo mit Live-Uhrzeiten; 1 Learning, Projektnotiz ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals: Ruckel-Ursachen gemessen und behoben, komplette Upload-ZIP; 1 Learning, 1 Prozess, Projektnotiz ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals: Erreichbarkeit nach Upload geprüft; 1 Learning ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals live bestätigt; Projektnotiz ergänzt
+- 2026-10-20 · Webdesign · MI-Visuals auf GitHub gepusht; 1 Learning, 1 Prozess, Projektnotiz ergänzt
+- 2026-10-21 · Webdesign · MI-Visuals: Showreel oben, Rechtstexte teils ausgefüllt; 1 Learning, Projektnotiz ergänzt
+- 2026-10-21 · Studium · Neue Projektnotiz SAP Fallstudie Bike International, 1 Learning
+- 2026-10-21 · Studium · SAP-Fallstudie: Nummer 1030 in Prompt eingesetzt
+- 2026-10-21 · Studium · SAP-Prompt in 3 Gruppen aufgeteilt; 1 Learning, Projektnotiz ergänzt
+- 2026-10-21 · Webdesign · Neue Projektnotiz bassamthebutcher Website, 1 Learning
+- 2026-10-21 · Webdesign · bassamthebutcher: Projektnotiz aktualisiert (Shopify-Optimierung), 3 Learnings, 1 Prozess
+- 2026-10-21 · Webdesign · bassamthebutcher: Test mit Shopify-CLI, Projektnotiz ergänzt; 2 Learnings, 1 Prozess
+- 2026-10-21 · Webdesign · bassamthebutcher: Theme unveröffentlicht hochgeladen, Projektnotiz ergänzt, 1 Learning
+- 2026-10-21 · Webdesign · bassamthebutcher: Theme live geschaltet und geprüft, Projektnotiz ergänzt, 1 Learning
+- 2026-10-21 · Webdesign · bassamthebutcher: Premium-Theme gebaut und unveröffentlicht hochgeladen; Projektnotiz, 2 Learnings
+- 2026-10-21 · Webdesign · bassamthebutcher: Premium-Theme live, Projektnotiz ergänzt, 1 Learning
+- 2026-10-21 · Webdesign · bassamthebutcher: Newsletter-Pop-up, 50 € und Website-Knopf; Projektnotiz, 3 Learnings, 1 Prozess
+- 2026-10-21 · Webdesign · bassamthebutcher: Newsletter-Theme live, Projektnotiz ergänzt, 1 Learning
+- 2026-10-21 · Webdesign · bassamthebutcher: Menü/AGB nach erneutem Speichern geprüft, live weiter unverändert
+- 2026-10-22 · Bachelorarbeit · 2 Learnings (loky-Absturz bei großen Daten, Schnelltest zu klein), Projektnotiz um Kapitel 6 und Optimierungslauf ergänzt
+- 2026-10-22 · Webdesign · Bassam-Shop: Live-Stand geprüft (= Premium von gestern), Ultra-HD-Quelle fürs Showreel gesucht (keine vorhanden); 1 Learning ergänzt
+- 2026-10-22 · Webdesign · Salam-Videoquelle geprüft (nur 1024×576); Projektnotiz ergänzt
+- 2026-10-22 · Webdesign · MI-Visuals: Projektkarte Bassam; 1 Learning, Projektnotiz ergänzt
+- 2026-10-22 · Webdesign · MI-Visuals: Laufband → Formular-Vorauswahl; 1 Learning, Projektnotiz ergänzt
+- 2026-10-22 · Bachelorarbeit · Projektnotiz um Ergebnis des Optimierungslaufs ergänzt, Aufgabe abgehakt
+- 2026-10-23 · Webdesign · E-Mail-Postfächer bei netcup geprüft (DNS, Zugangsdaten); 1 Learning ergänzt
+- 2026-10-23 · Webdesign · iPhone-Mailprofile erstellt; 1 Prozess ergänzt
+- 2026-10-23 · Webdesign · DNS geprüft (DKIM ok), DMARC/Strato-Werte für Malik vorbereitet; 1 Learning ergänzt
+- 2026-10-24 · Webdesign · bassamthebutcher: SEO-Stand, Google-Prüfung, Search Console begonnen; Projektnotiz, 2 Learnings, 1 Prozess
+- 2026-10-24 · Webdesign · bassamthebutcher: Search Console eingerichtet, Projektnotiz, 1 Learning
+- 2026-10-24 · Webdesign · bassamthebutcher: SEO für alle Produkte, Kollektionen und Seiten fertig; Google-Kanal geprüft; 3 Learnings
+- 2026-10-24 · Webdesign · bassamthebutcher: 15 doppelte Seiten ausgeblendet, Projektnotiz ergänzt
+- 2026-10-24 · Webdesign · bassamthebutcher: Versandkosten auf Kontaktseite 22 € → 20 € korrigiert
+- 2026-10-24 · Webdesign · bassamthebutcher: Shop Pay deaktiviert, Gastbestellung geprüft, PayPal inaktiv festgestellt
+- 2026-10-24 · Webdesign · bassamthebutcher: Apple Pay geprüft (Shop-seitig ok), 1 Learning
+- 2026-10-24 · Webdesign · bassamthebutcher: Apple Pay bestätigt (Ursache war die Safari-Einstellung)
+- 2026-10-25 · Webdesign · bassamthebutcher: Kasse nachgeprüft, Shop-Pay-Knopf nach Deaktivierung verschwunden (Verzögerung von wenigen Stunden)
+- 2026-10-26 · Webdesign · Projekt-Fragebogen (HTML) und Design-Qualitätsstandard: 3 Learnings, 1 Prozess
+- 2026-10-26 · Webdesign · bassamthebutcher: „Über Uns“ aus beiden Menüs, Mindestbestellwert in AGB und Versandbedingungen, Grundpreis bei 38 Varianten, alles live geprüft; 2 Learnings, 1 Prozess
+- 2026-10-26 · Webdesign · bassamthebutcher: Variante „100“ → „1000“ bei Protein Rinder-Rote, Grundpreis nachgetragen
+- 2026-10-26 · MI Visuals · ausfüllbarer Projekt-Fragebogen als PDF (7 Seiten): 1 Learning, 1 Prozess
+- 2026-10-26 · Webdesign · Profi-Check der Loretto-Seite, 1 Learning
+- 2026-10-26 · Webdesign · Loretto-Startseite umgebaut (Hero, Reihenfolge, Momente), 2 Learnings
+- 2026-10-26 · Webdesign · Loretto: Design-System aufgeräumt (Schrift-Skala, Farb-Tokens, Orange nur für Knöpfe), 1 Learning, 1 Prozess
+- 2026-10-26 · Webdesign · vergleich.py (Vorher/Nachher) in den Skill eingebaut, Prozess auf umgesetzt, 1 Learning
+- 2026-10-26 · Webdesign · Repo: Commit b067dea auf Zweig grossraum-und-profi-design (launch.json bewusst nicht, enthält Lead-Namen)
+- 2026-10-26 · Webdesign · Zweig grossraum-und-profi-design lokal in main übernommen (Fast-Forward, nicht gepusht)
+- 2026-10-26 · Webdesign · Loretto: Umbau verworfen, Vorlage/CSS/inhalt.json aus Sicherung zurückgesetzt und neu gebaut, 1 Learning
+- 2026-10-26 · Webdesign · Loretto: Malik behält die alte Seite, Umbau ruht
+- 2026-10-27 · Tech · 12 GitHub-Repos bewertet: neue Notiz KI-Werkzeuge fuer Webdesign (GitHub), Profil ergänzt, 1 Prozess, 1 Learning
+- 2026-10-27 · Tech · agent-skills (6 Skills) und HyperFrames (2 Skills + CLI) geprüft und eingebaut, FFmpeg installiert; Notiz ergänzt, 4 Learnings, Prozess auf umgesetzt
+- 2026-10-27 · Webdesign · 8 Skills ins Repo webdesign-beginner übernommen und gepusht (b067dea + 67cdb8b), launch.json weiter lokal
+- 2026-10-27 · Tech · CapCut für Werbevideos recherchiert, Abschnitt in KI-Werkzeuge-Notiz
+- 2026-10-27 · Tech · Neue Vorlage Vorlagen/Werbevideo.md, Prozess ergänzt
+- 2026-10-27 · Bachelorarbeit · Kap. 6, SHAP-/Feature-Analyse und Optimierungsergebnisse auf ba-optimierung committet (5c376e7), main noch nicht gemergt
+- 2026-10-27 · Bachelorarbeit · ba-optimierung per Fast-Forward in main gemergt und gepusht (main = 5c376e7)
+- 2026-10-27 · MI Visuals · Ablauf Werbevideo-Skript vereinbart, erster Auftrag (Entrümpelung), Prozess ergänzt
+- 2026-10-27 · Bachelorarbeit · Phase 1 Audit (docs/audit.md), Projektnotiz ergänzt (Abgabe 11.01.2027, offene Entscheidungen), Profil, 1 Learning
+- 2026-10-27 · MI Visuals · Projekt Werbevideos MI Visuals angelegt, Auftrag E1 (Entrümpelung) Skript v1
+- 2026-10-27 · Webdesign · bassamthebutcher: Admin-API-Zugang vorbereitet (Anleitung, .env-Vorlage, Prüfskript in arbeit/), wartet auf App im Dev Dashboard; 1 Learning
+- 2026-10-28 · Webdesign · bassamthebutcher: Newsletter-Stand geprüft (Codes fehlen, keine Willkommens-Mail), API-Zugang verworfen; 2 Learnings
+- 2026-10-28 · Webdesign · bassamthebutcher: Rabattcodes WILLKOMMEN10 und GRATISVERSAND angelegt und an der Kasse getestet
+- 2026-10-28 · Webdesign · bassamthebutcher: GRATISVERSAND deaktiviert, Pop-up nur noch mit 10 % (live)
+- 2026-10-28 · Webdesign · bassamthebutcher: Versand 20 → 15 € (Tarif, Theme, Versandbedingungen), live geprüft
+- 2026-10-28 · Webdesign · bassamthebutcher: Gratis-Versand ab 100 € entfernt, Versand immer 15 €
+- 2026-10-28 · Bachelorarbeit · Phase 2 fertig: Hauptlauf + alle Analysen auf vollen Daten, Tabelle alt→neu, Commit 066a00c
+- 2026-10-28 · Bachelorarbeit · Phase 3 fertig: Ablation, OOF-Kostenschwellen, Thesis Kap. 1–6, Abstract, Anhang überarbeitet, Commit aea4ad7
+- 2026-10-28 · Webdesign · bassamthebutcher: Newsletter-Pop-up erscheint jetzt nach 2 s statt 12 s (live getestet)
+- 2026-10-28 · Webdesign · bassamthebutcher: Pop-up ohne Pause, kommt bei jedem neuen Besuch wieder (live getestet)
+- 2026-10-28 · Bachelorarbeit · Phase 4 fertig: Sensitivität Anreisejahr, Endkontrolle, Änderungsprotokoll, Tag abgabe-kandidat-1 (Commit 1b8caee)
+- 2026-10-28 · Webdesign · bassamthebutcher: Pop-up erscheint auf jeder Seite bis zur Anmeldung (live getestet)
+- 2026-10-28 · Bachelorarbeit · Kurzfassung/Abstract ersetzt, Kürzungen umgesetzt (64 → 62 Seiten), Commit 3699331
+- 2026-10-28 · Bachelorarbeit · Formulierung deposit_type in Kurzfassung/Abstract, Tag abgabe-kandidat-2 gepusht
+- 2026-10-28 · Bachelorarbeit · 5.4/6.4: Rolling-Origin-Evaluation ergänzt, gepusht
+- 2026-10-28 · Bachelorarbeit · Tag abgabe-kandidat-3 auf 3df154e gesetzt und gepusht
+- 2026-10-28 · Bachelorarbeit · App-Screenshot automatisiert, Anhang A.4 aktualisiert, Tag abgabe-kandidat-4
+- 2026-10-28 · Bachelorarbeit · Prototyp: Anreisedatum, Dezimalkomma, company-Standardwert korrigiert; Screenshot neu; Tag abgabe-kandidat-5
+- 2026-10-28 · Webdesign · 6 Instagram-Reels (animierte Websites) ausgewertet, scrolltide und scroll-craft geprüft, Notiz ergänzt, 1 Learning
+- 2026-10-28 · Webdesign · scroll-craft installiert, Burger-Demo vorbereitet (Briefing offen)
+- 2026-10-28 · Webdesign · Burger-Demo: Briefing, Grammatik und Vite-Projekt (React, GSAP, Lenis) stehen; Smash-Videos in freien Archiven nicht gefunden, 1 Learning
+- 2026-10-28 · Webdesign · kie.ai-Kosten recherchiert, .env-Vorlage für den Schlüssel angelegt
+- 2026-10-28 · Tech · Higgsfield mit kie.ai verglichen, Abschnitt in KI-Werkzeuge-Notiz
+- 2026-10-28 · Webdesign · Burger-Demo auf Higgsfield umgestellt, Anleitung für Startbild und Smash-Video angelegt, 1 Learning
+- 2026-10-28 · Webdesign · Burger-Demo Entwurf 1 gebaut (React, GSAP, Lenis, React Bits, Higgsfield-Smash-Video), 3 Learnings
+- 2026-10-28 · Webdesign · Lead B1 recherchiert (Fakten lokal), Box-Effekt aus Reel analysiert
+- 2026-10-28 · Webdesign · Lead B1: Stack-Video (Burger fliegt auseinander) und Box-Bilder in Higgsfield erzeugt, ca. 56,5 von 100 Credits; Box-Video und Seitenumbau offen (Nutzungslimit)
+- 2026-10-29 · Webdesign · Salam's-Burger-Demo (B1) fertiggestellt, 1 Learning
+- 2026-10-29 · Verkaufen · Absage B1, Strategie: Demo als Vorlage und Portfolio wiederverwenden, 1 Learning
+- 2026-10-29 · Webdesign · Lead R1 (Burger Reutlingen): Mappe + Demo aus Burger-Vorlage, ohne neue Credits
+- 2026-10-29 · Verkaufen · Zusage R1, Angebot (790 € + 350 €) erstellt, 1 Learning
+- 2026-10-29 · Webdesign · R1: Konzept-PDF Bestellsystem (Stripe) erstellt
+- 2026-10-30 · Tech · Beratung MacBook Air 2019 als Dauer-Arbeitsgerät, Profil ergänzt

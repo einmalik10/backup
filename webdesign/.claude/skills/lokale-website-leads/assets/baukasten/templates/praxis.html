@@ -1,0 +1,102 @@
+{% extends "_base.html" %}
+{% block tokens %}
+  --bg:#f9fafb; --surface:#eef2f5; --ink:#14212b; --muted:#4f5d68; --line:#d8e0e6;
+  --f-display:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --display-weight:700; --display-tracking:-0.015em;
+  --radius-card:10px; --radius-btn:10px;
+{% endblock %}
+{% block css %}
+body{font-size:18px}
+.hero{padding-block:44px 56px;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:center}
+@media (min-width:860px){.hero .wrap{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px}.hero{padding-block:72px}}
+.hero .copy{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+.hero .fach{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)}
+.hero h1{font-size:clamp(38px,8vw,64px)}
+.hero .lead{font-size:20px;color:var(--muted);max-width:560px}
+.hero .btns{display:flex;flex-wrap:wrap;gap:10px}
+.hero-img img,.hero-img .ph{width:100%;aspect-ratio:5/4;object-fit:cover;border-radius:var(--radius-card)}
+.emerg{display:flex;gap:16px;align-items:flex-start;background:#fff4e5;border:1.5px solid #e8b46a;color:#3d2a0c;border-radius:var(--radius-card);padding:18px 20px;font-size:16.5px}
+.emerg svg{flex:none;width:26px;height:26px;margin-top:2px}
+.emerg b{display:block;margin-bottom:2px}
+.svc{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:640px){.svc{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:980px){.svc{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.svc article{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-card);padding:22px;display:flex;flex-direction:column;gap:8px}
+.svc h3{font-size:21px}
+.svc p{color:var(--muted);font-size:16.5px}
+.team{display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+@media (min-width:760px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.doc{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;align-items:start}
+.doc img,.doc .ph{width:96px;height:96px;border-radius:50%;object-fit:cover;padding:0;font-size:11px}
+.doc h3{font-size:22px}
+.doc .t{color:var(--brand);font-weight:700;font-size:15.5px;margin:2px 0 6px}
+.doc p{color:var(--muted);font-size:16.5px}
+.facts{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+@media (min-width:760px){.facts{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px}}
+.fact{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+@media (max-width:520px){.fact{grid-template-columns:minmax(0,1fr);gap:4px}}
+.fact dt{font-weight:700}
+.fact dd{margin:0;color:var(--muted)}
+{% endblock %}
+{% block navlinks %}<a href="{{ home }}#leistungen">Leistungen</a>{% if s.team %}<a href="{{ home }}#team">Team</a>{% endif %}<a href="{{ home }}#patienten">Für Patienten</a>{% endblock %}
+{% block zeiten_titel %}Sprechzeiten{% endblock %}
+{% block main %}
+<section class="hero">
+  <div class="wrap">
+    <div class="copy">
+      {% if s.fachrichtung %}<span class="fach">{{ s.fachrichtung }}</span>{% endif %}
+      <h1>{{ s.name }}</h1>
+      <p class="lead">{{ s.intro }}</p>
+      <span class="status" data-status hidden></span>
+      <div class="btns">
+        <a class="btn btn-primary" href="{{ cta.href }}"{% if cta.ext %} target="_blank" rel="noopener"{% endif %}>{{ icons[cta.icon] | safe }} {{ cta.label }}</a>
+        <a class="btn btn-ghost" href="tel:{{ tel_link }}">{{ icons.phone | safe }} {{ s.telefon }}</a>
+      </div>
+    </div>
+    <div class="hero-img">{% if s.bilder.hero %}<img src="{{ s.bilder.hero }}" alt="{{ s.bilder.hero_alt or ('Praxisräume ' ~ s.name) }}">{% else %}<div class="ph">Foto der Praxis<br>(Empfang oder Behandlungsraum)</div>{% endif %}</div>
+  </div>
+</section>
+
+<section style="padding-block:28px 0">
+  <div class="wrap">
+    <div class="emerg" role="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <div><b>Außerhalb der Sprechzeiten</b>{{ s.notfall or "Ärztlicher Bereitschaftsdienst: 116 117. In lebensbedrohlichen Notfällen: 112." }}</div>
+    </div>
+  </div>
+</section>
+
+<section id="leistungen">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Leistungen</span><h2>Wobei wir Ihnen helfen</h2></div>
+    <div class="svc">
+      {% for l in s.leistungen %}<article><h3>{{ l.titel }}</h3><p>{{ l.text }}</p></article>{% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if s.team %}
+<section id="team" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Team</span><h2>Ihre Ansprechpartner</h2></div>
+    <div class="team">
+      {% for t in s.team %}
+      <div class="doc">{% if t.bild %}<img src="{{ t.bild }}" alt="{{ t.name }}" loading="lazy">{% else %}<div class="ph">Foto</div>{% endif %}
+        <div><h3>{{ t.name }}</h3><div class="t">{{ t.titel }}</div>{% if t.text %}<p>{{ t.text }}</p>{% endif %}</div></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section id="patienten">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Für Patienten</span><h2>Gut vorbereitet zum Termin</h2></div>
+    <dl class="facts">
+      {% for f in s.patienteninfo %}<div class="fact"><dt>{{ f.titel }}</dt><dd>{{ f.text }}</dd></div>{% endfor %}
+    </dl>
+  </div>
+</section>
+{% endblock %}

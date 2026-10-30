@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Café Beispiel",
+    "inhaber": "Familie Muster", "inhaber_quelle": "Impressum", "inhabergefuehrt": true, "bewertungen": 140, "sterne": 4.6, "status": "open",
+    "website_qualitaet": "schlecht",
+    "eigene_website": "http://www.beispiel-cafe.example",
+    "ist_kette": false,
+    "reasons": "Am Screenshot bestätigt: Seite von 2012, auf dem Handy winzig, Speisekarte als Bild",
+    "pitch": "Karte, Öffnungszeiten und Reservierung auf dem Handy in 7 Tagen online",
+    "conf": "high",
+    "q": "Beispielgasse",
+    "phone": "",
+    "email": "",
+    "insta": ""
+  },
+  {
+    "name": "Imbiss ohne Seite",
+    "status": "open",
+    "website_qualitaet": "keine",
+    "eigene_website": null,
+    "ist_kette": false,
+    "reasons": "Viele Bewertungen auf Maps, keine eigene Website",
+    "pitch": "Kleines Paket: Karte, Zeiten, Telefon",
+    "conf": "medium"
+  }
+]

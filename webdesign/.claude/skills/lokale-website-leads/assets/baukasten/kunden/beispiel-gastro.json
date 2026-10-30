@@ -1,0 +1,51 @@
+{
+  "branche": "gastro",
+  "slug": "beispiel-gastro",
+  "demo": true,
+  "demo_von": "[Ihr Name]",
+  "name": "Küche Rautenberg",
+  "claim": "Restaurant in den Quadraten",
+  "intro": "Saisonale Küche aus der Region, frisch gekocht und ohne Schnickschnack. Mittags schnell, abends gemütlich.",
+  "kueche": "Deutsch, saisonal",
+  "farbe": "#2f5d3a",
+  "adresse": { "strasse": "G7 9", "plz": "68159", "ort": "Mannheim" },
+  "anfahrt": "Fünf Minuten zu Fuß vom Marktplatz. Fahrradständer vor der Tür.",
+  "telefon": "0621 7654321",
+  "email": "tisch@beispiel.de",
+  "reservierung_url": "",
+  "fakten": ["Terrasse", "Vegane Gerichte"],
+  "oeffnungszeiten": {
+    "mo": ["11:30-14:30"],
+    "di": ["11:30-14:30", "17:30-22:00"],
+    "mi": ["11:30-14:30", "17:30-22:00"],
+    "do": ["11:30-14:30", "17:30-22:00"],
+    "fr": ["11:30-14:30", "17:30-23:00"],
+    "sa": ["17:30-23:00"]
+  },
+  "mittagstisch": { "zeit": "Mo bis Fr, 11:30 bis 14:30 Uhr", "titel": "Mittagstisch", "text": "Jeden Tag ein Fleisch- und ein veganes Gericht, dazu Salat und Wasser.", "preis": "12,90 €" },
+  "karte": [
+    { "kategorie": "Vorspeisen", "gerichte": [
+      { "name": "Kürbissuppe", "beschreibung": "mit Kernöl und gerösteten Kernen", "preis": "6,50 €", "tags": ["vegan"] },
+      { "name": "Flammkuchen klassisch", "beschreibung": "Speck, Zwiebeln, Crème fraîche", "preis": "9,90 €" },
+      { "name": "Feldsalat", "beschreibung": "Kartoffeldressing, Croûtons", "preis": "8,50 €", "tags": ["vegetarisch"] }
+    ]},
+    { "kategorie": "Hauptgerichte", "gerichte": [
+      { "name": "Schäufele", "beschreibung": "mit Kartoffelsalat und Meerrettich", "preis": "18,90 €" },
+      { "name": "Linsen-Dal", "beschreibung": "Kokos, Koriander, Basmati", "preis": "14,50 €", "tags": ["vegan", "scharf"] },
+      { "name": "Käsespätzle", "beschreibung": "Bergkäse, Röstzwiebeln, Salat", "preis": "13,90 €", "tags": ["vegetarisch"] },
+      { "name": "Zanderfilet", "beschreibung": "Rieslingkraut, Kartoffelpüree", "preis": "22,50 €" }
+    ]},
+    { "kategorie": "Desserts", "gerichte": [
+      { "name": "Apfelstrudel", "beschreibung": "mit Vanillesauce", "preis": "6,90 €", "tags": ["vegetarisch"] },
+      { "name": "Schokoladenmousse", "preis": "6,50 €", "tags": ["vegan"] }
+    ]},
+    { "kategorie": "Getränke", "hinweis": "Weine aus der Pfalz und von der Bergstraße.", "gerichte": [
+      { "name": "Riesling trocken, 0,2 l", "preis": "6,50 €" },
+      { "name": "Eichbaum Pils, 0,4 l", "preis": "4,60 €" },
+      { "name": "Hausgemachte Limonade", "preis": "4,20 €", "tags": ["vegan"] }
+    ]}
+  ],
+  "lieferung": [],
+  "bilder": {},
+  "impressum": { "inhaber": "" }
+}

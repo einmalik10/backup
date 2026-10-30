@@ -1,0 +1,35 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "bc-automobile",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-I", "C:/Users/Malik/Projekte-mit-Malik/BC/werkzeuge/server.py", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "autohaus-vorlage",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-I", "C:/Users/Malik/Projekte-mit-Malik/Vorlage-Autohaus/werkzeuge/server.py", "8767"],
+      "port": 8767
+    },
+    {
+      "name": "mi-visuals",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8768", "--directory", "C:/Users/Malik/Desktop/Mi-Visuals-main/Mi-Visuals-main"],
+      "port": 8768
+    },
+    {
+      "name": "vorlagen",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8769", "--directory", "C:/Users/Malik/webdesign/vorlagen"],
+      "port": 8769
+    },
+    {
+      "name": "salsamara",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8766", "--directory", "C:/Users/Malik/webdesign/arbeit/salsamara"],
+      "port": 8766
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>{{ k.name }} – Website-Entwurf</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500{% for f in k.schriften %}&family={{ f[0] | replace(' ', '+') }}{% endfor %}&display=swap">
+<style>
+@page{size:A4;margin:0}
+:root{--ink:#1b1d21;--muted:#5b5f66;--line:#dedad3;--paper:#ffffff;--soft:#f4f2ee;--studio:#a8432c;--k:{{ k.farben[0][0] }};--k2:{{ k.farben[1][0] }}}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;background:#8a8d92}
+body{font-family:"Hanken Grotesk","Segoe UI",sans-serif;color:var(--ink);font-size:10.5pt;line-height:1.5}
+.page{width:210mm;height:297mm;background:var(--paper);margin:0 auto 10mm;position:relative;overflow:hidden;padding:16mm 16mm 14mm;display:flex;flex-direction:column;gap:7mm;break-after:page}
+@media print{html,body{background:none}.page{margin:0}}
+h1,h2,h3{font-family:"Bricolage Grotesque","Segoe UI",sans-serif;margin:0;line-height:1.05;text-wrap:balance}
+h2{font-size:26pt;font-weight:800;letter-spacing:-.01em}
+h3{font-size:13pt;font-weight:700}
+p{margin:0}
+.kopf{display:flex;justify-content:space-between;align-items:baseline;font:500 8pt "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fuss{margin-top:auto;display:flex;justify-content:space-between;font-size:8.5pt;color:var(--muted);border-top:1px solid var(--line);padding-top:3mm}
+.kicker{font:500 8pt "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--studio);margin-bottom:2mm}
+.chip{display:inline-block;align-self:flex-start;font:700 9pt "Bricolage Grotesque",sans-serif;padding:1.2mm 3mm;border-radius:2mm;background:var(--k);color:#fff}
+
+/* Geräte-Rahmen */
+.browser{border-radius:3mm;overflow:hidden;background:#fff;box-shadow:0 0 0 .3mm #c9c5bd,0 4mm 10mm -4mm rgba(0,0,0,.35)}
+.browser .leiste{height:6mm;background:#ecebe8;display:flex;align-items:center;gap:1.4mm;padding:0 3mm}
+.browser .leiste i{width:2.2mm;height:2.2mm;border-radius:50%;background:#c9c5bd}
+.browser .leiste span{margin-left:3mm;flex:1;height:3.4mm;border-radius:2mm;background:#fff;font:6.5pt/3.4mm "JetBrains Mono",monospace;color:#8a8d92;padding:0 2mm;overflow:hidden;white-space:nowrap}
+.browser img{display:block;width:100%}
+.phone{background:#111;border-radius:7mm;padding:1.6mm;box-shadow:0 4mm 10mm -4mm rgba(0,0,0,.45)}
+.phone img{display:block;width:100%;border-radius:5.6mm}
+
+/* Cover */
+.cover{background:var(--soft)}
+.cover .titel{display:flex;flex-direction:column;gap:3mm;margin-top:6mm}
+.cover h1{font-size:46pt;font-weight:800;letter-spacing:-.02em}
+.cover .unter{font-size:13pt;color:var(--muted)}
+.cover .buehne{position:relative;margin-top:6mm;height:150mm}
+.cover .buehne .browser{position:absolute;left:0;top:0;width:158mm}
+.cover .buehne .phone{position:absolute;right:0;top:34mm;width:52mm}
+.cover .zeile{display:flex;gap:6mm;font-size:10pt}
+.cover .zeile div{display:flex;flex-direction:column}
+.cover .zeile b{font:500 7.5pt "JetBrains Mono",monospace;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+/* Vorher/Nachher */
+.vn{display:grid;grid-template-columns:minmax(0,1fr) 29mm;gap:5mm;align-items:start}
+.vn-block{display:flex;flex-direction:column;gap:3mm}
+.vn-label{display:flex;align-items:center;gap:3mm}
+.vn-label span{font:700 9pt "Bricolage Grotesque",sans-serif;padding:1mm 3mm;border-radius:10mm;text-transform:uppercase;letter-spacing:.04em}
+.alt span{background:#e8e5df;color:#5b5f66}
+.neu span{background:var(--k);color:#fff}
+.vn .browser img{height:57mm;object-fit:cover;object-position:top}
+.vn .phone img{height:55mm;object-fit:cover;object-position:top}
+.liste{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4mm;font-size:9.5pt}
+.liste div{border-top:.5mm solid currentColor;padding-top:2mm}
+.liste.alt div{color:#7a3b2e}
+.liste.alt div p,.liste.neu div p{color:var(--ink)}
+.liste.neu div{color:var(--k)}
+.liste b{display:block;font-size:9.5pt;margin-bottom:1mm}
+
+/* Design */
+.konzept{display:grid;grid-template-columns:minmax(0,1fr);gap:3mm}
+.konzept p{font-size:11.5pt;line-height:1.6;max-width:165mm}
+.farben{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3mm}
+.farbe{border-radius:2.5mm;overflow:hidden;box-shadow:0 0 0 .3mm var(--line)}
+.farbe .fl{height:22mm}
+.farbe div{padding:2.2mm 2.8mm;font-size:8.5pt}
+.farbe b{display:block;font-size:9.5pt}
+.farbe code{font:500 8pt "JetBrains Mono",monospace;color:var(--muted)}
+.schriften{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4mm}
+.schrift{background:var(--soft);border-radius:2.5mm;padding:4mm 5mm;display:flex;flex-direction:column;gap:1.5mm}
+.schrift .muster{font-size:26pt;line-height:1.05;color:var(--ink)}
+.schrift small{font:500 7.5pt "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.entsch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4mm 6mm}
+.entsch div{border-left:1mm solid var(--k);padding-left:3.5mm}
+.entsch b{display:block;font-size:10.5pt;margin-bottom:.8mm}
+.entsch p{font-size:9.5pt;color:#33363c}
+
+/* Handy */
+.handys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7mm;align-items:start}
+.handys figure{margin:0;display:flex;flex-direction:column;gap:3mm}
+.handys .phone img{height:118mm;object-fit:cover;object-position:top}
+.handys figcaption{font-size:9pt;color:var(--muted);text-align:center}
+.funktionen{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4mm;background:var(--soft);border-radius:3mm;padding:5mm}
+.funktionen b{display:block;font-size:10pt}
+.funktionen span{font-size:9pt;color:var(--muted)}
+
+/* Angebot */
+.preisbox{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:6mm;align-items:stretch}
+.paket{background:var(--ink);color:#fff;border-radius:3mm;padding:7mm;display:flex;flex-direction:column;gap:3mm}
+.paket .gross{font:800 40pt/1 "Bricolage Grotesque",sans-serif}
+.paket ul{margin:0;padding-left:5mm;font-size:9.5pt;line-height:1.65;color:#e6e3dd}
+.paket .gruen{background:var(--studio);border-radius:2mm;padding:2.5mm 3.5mm;font-weight:700;font-size:10pt;align-self:flex-start}
+.neben{display:flex;flex-direction:column;gap:4mm}
+.neben .karte{border:.4mm solid var(--ink);border-radius:3mm;padding:4.5mm 5mm}
+.neben b{display:block;font-size:10.5pt}
+.neben span{font-size:9.5pt;color:#33363c}
+.brauchen{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2mm 6mm;margin:0;padding:0;list-style:none;font-size:10pt}
+.brauchen li{display:flex;gap:2.5mm}
+.brauchen li::before{content:"";width:3mm;height:3mm;border:.4mm solid var(--ink);border-radius:.6mm;flex:none;margin-top:1mm}
+.schritte{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4mm}
+.schritte div{border-top:1mm solid var(--studio);padding-top:2.5mm;font-size:9.5pt}
+.schritte b{display:block;font:800 16pt "Bricolage Grotesque",sans-serif;color:var(--studio)}
+.kontakt{display:flex;justify-content:space-between;align-items:center;gap:6mm;background:var(--studio);color:#fff;border-radius:3mm;padding:6mm 7mm}
+.kontakt h3{font-size:16pt}
+.kontakt div:last-child:not(:first-child){text-align:right;font-size:10.5pt;line-height:1.6;flex:none;white-space:nowrap}
+/* Seite 1: Website-Check */
+.hook{gap:5mm}
+.hook-titel h1{font-size:34pt;font-weight:800;letter-spacing:-.02em;margin-top:1mm}
+.hook-titel .unter{font-size:12pt;color:#7a3b2e;margin-top:2.5mm;max-width:170mm}
+.hook .kicker{color:#c4382a}
+.hook-shot .shot{position:relative}
+.hook-shot img{display:block;width:100%}
+.pin{position:absolute;display:flex;align-items:center;gap:1.6mm;transform:translate(-3.5mm,-3.5mm);white-space:nowrap}
+.pin b{width:7mm;height:7mm;border-radius:50%;background:#d7261e;color:#fff;display:grid;place-items:center;font:800 10pt "Bricolage Grotesque",sans-serif;box-shadow:0 0 0 1.2mm rgba(215,38,30,.28),0 1mm 3mm rgba(0,0,0,.35);flex:none}
+.pin span{background:#d7261e;color:#fff;font:700 8.5pt "Hanken Grotesk",sans-serif;padding:1.2mm 2.4mm;border-radius:1.4mm;box-shadow:0 1mm 3mm rgba(0,0,0,.3)}
+.pin.links{flex-direction:row-reverse;transform:translate(calc(-100% + 3.5mm),-3.5mm)}
+.hook-unten{display:grid;grid-template-columns:36mm minmax(0,1fr) minmax(0,1fr);gap:6mm;align-items:stretch}
+.hook-phone img{height:66mm;object-fit:cover;object-position:top}
+.check{display:flex;flex-direction:column;gap:1.6mm}
+.check h3{font-size:12pt;margin-bottom:1mm}
+.c{display:flex;align-items:center;gap:2.4mm;font-size:9.5pt}
+.c i{font-style:normal;width:5.2mm;height:5.2mm;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:8.5pt;flex:none}
+.c.nein i{background:#fde3e0;color:#c4382a}
+.c.ok i{background:#dff3e6;color:#22804a}
+.ergebnis{margin-top:auto;display:flex;align-items:baseline;gap:2mm;border-top:.4mm solid var(--ink);padding-top:2mm}
+.ergebnis b{font:800 18pt "Bricolage Grotesque",sans-serif;color:#c4382a}
+.ergebnis span{font-size:9pt;color:var(--muted)}
+.weiter{background:var(--ink);color:#fff;border-radius:3mm;padding:5mm;display:flex;flex-direction:column;justify-content:flex-end;gap:2mm}
+.weiter b{font:800 16pt/1.1 "Bricolage Grotesque",sans-serif}
+.weiter span:last-child{font-size:9.5pt;color:#d9d6cf}
+.cover h1{font-size:34pt}
+
+.voll{display:grid;gap:4mm 4mm;align-items:start}
+.voll figure{margin:0;display:flex;flex-direction:column;gap:1.6mm}
+.voll .phone{padding:1.1mm;border-radius:5mm}
+.voll .phone img{border-radius:4mm;width:100%;height:auto}
+.voll figcaption{font:500 7.5pt "JetBrains Mono",monospace;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+
+<!-- 1 Website-Check (Aufhänger) -->
+<section class="page hook">
+  <div class="kopf"><span>Website-Check · {{ k.name }}</span><span>{{ k.stadt or '' }} · {{ datum }}</span></div>
+  <div class="hook-titel">
+    <div class="kicker">Website-Check · {{ k.quadrat }}</div>
+    <h1>{% if k.vorher_art in ('website','fehler') %}So sieht Ihre Website heute aus.{% else %}So finden Kunden Sie heute im Netz.{% endif %}</h1>
+    <p class="unter">{{ k.probleme[0] }}</p>
+  </div>
+  <div class="browser hook-shot">
+    <div class="leiste"><i></i><i></i><i></i><span>{% if k.vorher_art == 'fehler' %}⚠ {{ k.fehler.domain }} · nicht erreichbar · nachgestellt{% elif k.vorher_art == 'website' %}{% if k.vorher_url.startswith('https') %}🔒 {{ k.vorher_url | replace('https://','') }}{% else %}⚠ Nicht sicher · {{ k.vorher_url | replace('http://','') }}{% endif %}{% else %}Suche: {{ k.suche.q }} · nachgestellt{% endif %}</span></div>
+    <div class="shot">
+      <img src="img/{{ k.slug }}-alt-pc.png" alt="">
+      {% for x, y, t in k.kritik %}<div class="pin{% if x > 58 %} links{% endif %}" style="left:{{ x }}%;top:{{ y }}%"><b>{{ loop.index }}</b><span>{{ t }}</span></div>{% endfor %}
+    </div>
+  </div>
+  <div class="hook-unten">
+    <div class="phone hook-phone"><img src="img/{{ k.slug }}-alt-handy.png" alt=""></div>
+    <div class="check">
+      <h3>Website-Check</h3>
+      {% for t, ok in k.check %}<div class="c {{ 'ok' if ok else 'nein' }}"><i>{{ '✓' if ok else '✗' }}</i><span>{{ t }}</span></div>{% endfor %}
+      <div class="ergebnis"><b>{{ k.check | selectattr(1) | list | length }} von {{ k.check | length }}</b><span>Punkten erfüllt</span></div>
+    </div>
+    <div class="weiter">
+      <span class="kicker" style="color:#fff;opacity:.85">Gute Nachricht</span>
+      <b>Das lässt sich in 7 Tagen ändern.</b>
+      <span>Umblättern: So könnte Ihre neue Seite aussehen →</span>
+    </div>
+  </div>
+  <div class="fuss"><span>{% if absender.name %}{{ absender.name }} · {% endif %}{{ k.fusszeile or 'Webdesign aus der Region' }}</span><span>1 / 5</span></div>
+</section>
+
+<!-- 2 Der Entwurf -->
+<section class="page cover">
+  <div class="kopf"><span>{{ k.name }}</span><span>Der Entwurf</span></div>
+  <div class="titel">
+    <span class="chip">{{ k.quadrat }}</span>
+    <h1>So könnte Ihre Website aussehen.</h1>
+    <p class="unter">Ein unverbindlicher Entwurf für {{ k.name }}, auf PC und Handy.</p>
+  </div>
+  <div class="buehne">
+    <div class="browser"><div class="leiste"><i></i><i></i><i></i><span>https://{{ k.domain or "ihre-domain.de" }}</span></div><img src="img/{{ k.slug }}-neu-pc.png" alt=""></div>
+    <div class="phone"><img src="img/{{ k.slug }}-neu-handy-1.png" alt=""></div>
+  </div>
+  <div class="liste neu">{% for e in k.entscheidungen[:3] %}<div><b>{{ e[0] }}</b><p>{{ e[1] }}</p></div>{% endfor %}</div>
+  <div class="fuss"><span>{% if absender.name %}{{ absender.name }} · {% endif %}{{ k.fusszeile or 'Webdesign aus der Region' }}</span><span>2 / 5</span></div>
+</section>
+
+<!-- 3 Design -->
+<section class="page">
+  <div class="kopf"><span>{{ k.name }}</span><span>Gedanken zum Design</span></div>
+  <div class="konzept"><div class="kicker">Die Idee</div><h2>{{ k.konzept_titel }}</h2><p>{{ k.konzept }}</p></div>
+  <div><h3 style="margin-bottom:3mm">Farben</h3>
+    <div class="farben">{% for f in k.farben %}<div class="farbe"><div class="fl" style="background:{{ f[0] }}"></div><div><b>{{ f[1] }}</b>{{ f[2] }}<br><code>{{ f[0] }}</code></div></div>{% endfor %}</div></div>
+  <div><h3 style="margin-bottom:3mm">Schriften</h3>
+    <div class="schriften">{% for f in k.schriften %}<div class="schrift"><small>{{ 'Überschriften' if loop.first else 'Texte und Details' }} · {{ f[0] }}</small><span class="muster" style="font-family:'{{ f[0] }}',serif">{{ k.name }}</span><span style="font-size:9.5pt;color:#33363c">{{ f[1] }}</span></div>{% endfor %}</div></div>
+  <div><h3 style="margin-bottom:3mm">Warum es so aussieht</h3>
+    <div class="entsch">{% for e in k.entscheidungen %}<div><b>{{ e[0] }}</b><p>{{ e[1] }}</p></div>{% endfor %}</div></div>
+  <div class="fuss"><span>{% if absender.name %}{{ absender.name }} · {% endif %}{{ k.fusszeile or 'Webdesign aus der Region' }}</span><span>3 / 5</span></div>
+</section>
+
+<!-- 4 Handy -->
+<section class="page">
+  <div class="kopf"><span>{{ k.name }}</span><span>Auf dem Handy</span></div>
+  <div><div class="kicker">Unterwegs gefunden</div><h2>So sieht die neue Seite auf dem Handy aus.</h2></div>
+  {% set teile = k.handy_teile or [] %}
+  <p style="margin:-3mm 0 0;color:var(--muted);font-size:10pt">Die komplette neue Seite auf dem Handy, Bildschirm für Bildschirm von oben nach unten.</p>
+  <div class="voll" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+    {% for t in teile %}<figure><div class="phone"><img src="{{ t }}" alt=""></div><figcaption>{{ loop.index }} / {{ teile|length }}</figcaption></figure>{% endfor %}
+  </div>
+{% if (k.handy_teile or [])|length <= 4 %}
+  <div class="funktionen">
+    <div><b>Anrufen</b><span>mit einem Tipp</span></div>
+    <div><b>Route</b><span>direkt in Google Maps</span></div>
+    <div><b>{% if 'Friseur' in k.branche or 'Barber' in k.branche %}Termin buchen{% else %}Karte lesen{% endif %}</b><span>ohne Zoomen, ohne PDF</span></div>
+    <div><b>Schnell</b><span>lädt in Sekunden, auch unterwegs</span></div>
+  </div>
+  {% endif %}
+  <div class="fuss"><span>{% if absender.name %}{{ absender.name }} · {% endif %}{{ k.fusszeile or 'Webdesign aus der Region' }}</span><span>4 / 5</span></div>
+</section>
+
+<!-- 5 Angebot -->
+<section class="page">
+  <div class="kopf"><span>{{ k.name }}</span><span>Angebot und nächste Schritte</span></div>
+  <div><div class="kicker">Mein Vorschlag</div><h2>Erst sehen, dann zahlen.</h2></div>
+  <div class="preisbox">
+    <div class="paket">
+      <span style="font:500 8pt 'JetBrains Mono',monospace;letter-spacing:.14em;color:#d8d3ca">PAKET {{ k.paket | upper }} · EINMALIG</span>
+      {% if k.angebot %}<span style="font-size:13pt;color:#a9a49b;text-decoration:line-through">{{ k.preis }}</span><span class="gross">{{ k.angebot.preis }}</span><span style="font-size:10pt;color:#e6e3dd">{{ k.angebot.text }}</span>{% else %}<span class="gross">{{ k.preis }}</span>{% endif %}
+      <ul>
+        <li>Website wie im Entwurf, mit Ihren Fotos und Texten</li>
+        <li>Optimiert für Handy, Tablet und PC, mit HTTPS</li>
+        <li>Google-Unternehmensprofil verknüpft und optimiert</li>
+        <li>Impressum und Datenschutz, Schriften lokal eingebunden</li>
+        <li>{{ k.extras }}</li>
+      </ul>
+      <span class="gruen">Gefällt Ihnen der Entwurf nicht, zahlen Sie nichts.</span><span style="font-size:9pt;color:#cfcac1">Einmalpreis. Laufende Kosten nur beim Anbieter, auf Ihren Namen: Domain, Speicherplatz und E-Mail, ca. 2–5 € im Monat. Daran verdienen wir nichts.</span>
+    </div>
+    <div class="neben">
+      <div class="karte"><b>Selbst pflegen: + 150 €</b><span>Karte, Preise und Öffnungszeiten ändern Sie selbst vom Handy aus, in einer einfachen Tabelle.</span></div>
+      <div class="karte"><b>Kein Abo, keine Folgekosten</b><span>Domain und Seite gehören Ihnen. Später Änderungen nur bei Bedarf: 49 € pro Änderung oder 5 für 199 €.</span></div>
+      {% if k.angebot %}<div class="karte" style="border-style:dashed"><b>Fair bezahlen</b><span>50 % bei Zusage, 50 % erst, wenn die Seite online ist. Der Einführungspreis gilt nur bis zur genannten Frist.</span></div>{% else %}<div class="karte" style="border-style:dashed"><b>Eröffnungsangebot</b><span>Für die ersten Kunden {{ k.gebiet or 'in der Region' }} gibt es einen Nachlass, im Gegenzug für eine Referenz und eine Google-Bewertung.</span></div>{% endif %}
+    </div>
+  </div>
+  <div><h3 style="margin-bottom:3mm">Was ich von Ihnen brauche</h3>
+    <ul class="brauchen">{% for b in k.brauchen %}<li>{{ b }}</li>{% endfor %}</ul></div>
+  <div class="schritte">
+    <div><b>1</b>Sie sagen Ja zum Entwurf</div>
+    <div><b>2</b>Sie schicken Fotos und Infos</div>
+    <div><b>3</b>Ich setze alles um, Sie geben Feedback</div>
+    <div><b>4</b>Nach 5 bis 7 Tagen ist die Seite online</div>
+  </div>
+  <div class="kontakt"><div><h3>Auf einen Kaffee?</h3><span style="font-size:10pt">{{ k.kaffee_text or 'Ich zeige Ihnen den Entwurf gern persönlich, in 15 Minuten bei Ihnen vor Ort.' }} Alle Preise sind Endpreise, gemäß § 19 UStG ohne Umsatzsteuer.</span></div>{% if absender.telefon %}<div><b>{{ absender.name }}</b><br>{{ absender.telefon }}<br>{{ absender.zusatz }}</div>{% endif %}</div>
+  <div class="fuss"><span>{% if absender.name %}{{ absender.name }} · {% endif %}{{ k.fusszeile or 'Webdesign aus der Region' }}</span><span>5 / 5</span></div>
+</section>
+</body>
+</html>

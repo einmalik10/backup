@@ -1,0 +1,45 @@
+{
+  "branche": "praxis",
+  "slug": "beispiel-praxis",
+  "demo": true,
+  "demo_von": "[Ihr Name]",
+  "name": "Zahnarztpraxis am Ring",
+  "claim": "Zahnarzt in Mannheim",
+  "fachrichtung": "Zahnmedizin",
+  "intro": "Moderne Zahnmedizin mit Zeit für Ihre Fragen. Für Erwachsene, Kinder und Angstpatienten.",
+  "farbe": "#1f5f8b",
+  "adresse": { "strasse": "P7 3", "plz": "68161", "ort": "Mannheim" },
+  "anfahrt": "Aufzug vorhanden, der Eingang ist stufenlos. Haltestelle Wasserturm in 3 Minuten.",
+  "telefon": "0621 2223334",
+  "email": "praxis@beispiel.de",
+  "termin_url": "",
+  "oeffnungszeiten": {
+    "mo": ["08:00-12:00", "14:00-18:00"],
+    "di": ["08:00-12:00", "14:00-18:00"],
+    "mi": ["08:00-13:00"],
+    "do": ["08:00-12:00", "14:00-19:00"],
+    "fr": ["08:00-13:00"]
+  },
+  "zeiten_hinweis": "Schmerzpatienten kommen bitte zu Beginn der Sprechzeit.",
+  "leistungen": [
+    { "titel": "Vorsorge und Prophylaxe", "text": "Kontrolle, professionelle Zahnreinigung und Beratung zur Pflege zu Hause." },
+    { "titel": "Füllungen", "text": "Zahnfarbene Kunststofffüllungen und Keramik-Inlays." },
+    { "titel": "Wurzelbehandlung", "text": "Schonende Behandlung, um den eigenen Zahn zu erhalten." },
+    { "titel": "Zahnersatz", "text": "Kronen, Brücken und Prothesen, auf Wunsch mit Implantaten." },
+    { "titel": "Kinderzahnheilkunde", "text": "Spielerisch und geduldig, damit der Zahnarztbesuch keine Angst macht." },
+    { "titel": "Angstpatienten", "text": "Mehr Zeit, ruhige Erklärungen und auf Wunsch Behandlung in Etappen." }
+  ],
+  "team": [
+    { "name": "[Name Zahnärztin/Zahnarzt]", "titel": "Zahnärztin, Praxisinhaberin", "text": "Schwerpunkte: Prophylaxe und Kinderzahnheilkunde." },
+    { "name": "[Name]", "titel": "Zahnmedizinische Prophylaxeassistentin", "text": "" }
+  ],
+  "patienteninfo": [
+    { "titel": "Versicherung", "text": "Alle gesetzlichen Kassen, privat Versicherte und Selbstzahler." },
+    { "titel": "Bitte mitbringen", "text": "Versichertenkarte, Bonusheft und eine aktuelle Medikamentenliste." },
+    { "titel": "Erster Besuch", "text": "Bitte kommen Sie 10 Minuten früher, um den Anamnesebogen auszufüllen." },
+    { "titel": "Barrierefreiheit", "text": "Stufenloser Zugang und Aufzug. Sprechen Sie uns an, wenn Sie Unterstützung brauchen." },
+    { "titel": "Sprachen", "text": "Deutsch, Englisch, Türkisch." }
+  ],
+  "bilder": {},
+  "impressum": { "inhaber": "", "kammer": "Landeszahnärztekammer Baden-Württemberg" }
+}

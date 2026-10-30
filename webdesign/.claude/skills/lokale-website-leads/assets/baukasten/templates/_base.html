@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ s.name }} – {{ s.claim }}{% endblock %}</title>
+<meta name="description" content="{{ s.meta_beschreibung or s.intro }}">
+{% if s.demo %}<meta name="robots" content="noindex, nofollow">{% endif %}
+<meta name="theme-color" content="{{ s.farbe }}">
+<link rel="preload" href="fonts/{{ fonts[0] }}" as="font" type="font/woff2" crossorigin>
+<style>
+{% for f in font_faces %}@font-face{font-family:"{{ f.family }}";src:url("fonts/{{ f.file }}") format("woff2");font-weight:{{ f.weight }};font-style:normal;font-display:swap}
+{% endfor %}
+:root{
+  --brand: {{ s.farbe }};
+  --brand-ink: {{ brand_ink }};
+  {% block tokens %}{% endblock %}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;padding-bottom:76px}
+@media (min-width:860px){body{padding-bottom:0}}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--f-display);font-weight:var(--display-weight,600);line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:clamp(30px,6vw,46px);letter-spacing:var(--display-tracking,0)}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+section{padding-block:64px}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px}
+.sec-head{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;max-width:680px}
+.sec-head p{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 24px;border-radius:var(--radius-btn,999px);font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.btn-primary{background:var(--brand);color:var(--brand-ink)}
+.btn-ghost{border-color:currentColor;color:var(--ink)}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* Demo-Hinweis */
+.demo-bar{background:var(--ink);color:var(--bg);font-size:13.5px;text-align:center;padding:8px 16px}
+
+/* Kopfzeile */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.logo{font-family:var(--f-display);font-weight:var(--display-weight,600);font-size:24px;text-decoration:none;letter-spacing:var(--display-tracking,0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav{display:none;gap:26px;align-items:center;font-size:15px}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+@media (min-width:860px){.nav{display:flex}}
+.top .btn{min-height:42px;padding:0 18px;font-size:15px}
+.top-cta{display:none}
+@media (min-width:600px){.top-cta{display:inline-flex}}
+
+.notice{background:color-mix(in srgb,var(--brand) 14%,var(--bg));border-bottom:1px solid var(--line);font-size:15px;padding:10px 0;text-align:center}
+
+/* Status-Pille */
+.status{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--muted)}
+.status.open i{background:#2f9e5b;box-shadow:0 0 0 4px color-mix(in srgb,#2f9e5b 22%,transparent)}
+.status.closed i{background:#c4492f}
+
+/* Öffnungszeiten + Anfahrt */
+.info-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+@media (min-width:760px){.info-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.hours{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.hours td{padding:11px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right}
+.hours tr.today td{font-weight:700}
+.hours tr.today td:first-child::after{content:" · heute";font-weight:500;color:var(--muted)}
+.place{display:flex;flex-direction:column;gap:16px}
+.place address{font-style:normal;font-size:19px;line-height:1.5}
+.quadrat{display:inline-grid;place-items:center;min-width:56px;height:56px;padding:0 10px;border-radius:var(--radius-card,12px);background:var(--brand);color:var(--brand-ink);font-family:var(--f-display);font-size:24px;font-weight:700}
+.place-row{display:flex;gap:16px;align-items:center}
+.place .btns{display:flex;flex-wrap:wrap;gap:10px}
+.small{font-size:14.5px;color:var(--muted)}
+
+/* Galerie */
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:760px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.gallery img,.gallery .ph{aspect-ratio:4/5;width:100%;object-fit:cover;border-radius:var(--radius-card,12px)}
+.ph{background:linear-gradient(135deg,color-mix(in srgb,var(--brand) 26%,var(--surface)),var(--surface));display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:12px}
+
+/* Bewertung */
+.rating{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:15px}
+.rating b{font-size:20px}
+.stars{color:#e0a100;letter-spacing:2px}
+
+/* Footer */
+footer{border-top:1px solid var(--line);padding-block:36px;font-size:14.5px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer nav{display:flex;gap:20px;flex-wrap:wrap}
+
+/* Handy-Leiste */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line)}
+.mbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;border-radius:12px;text-decoration:none;font-size:13px;font-weight:600;background:var(--surface)}
+.mbar a.main{background:var(--brand);color:var(--brand-ink)}
+.mbar svg{width:20px;height:20px}
+@media (min-width:860px){.mbar{display:none}}
+
+/* Rechtliches */
+.legal{max-width:760px}
+.legal h1{font-size:clamp(36px,7vw,52px);margin-bottom:24px}
+.legal h2{font-size:22px;margin:30px 0 8px;font-family:var(--f-body);font-weight:700}
+.legal p+p{margin-top:12px}
+mark.missing{background:#ffd54a;color:#1a1a1a;padding:0 4px;border-radius:3px}
+.todo{background:#fff4e5;border:1.5px solid #e8b46a;padding:14px 16px;border-radius:8px;color:#3d2a0c;margin-bottom:8px}
+{% block css %}{% endblock %}
+</style>
+{% if s.schema %}<script type="application/ld+json">{{ s.schema | tojson }}</script>{% endif %}
+</head>
+<body>
+{% if s.demo %}<div class="demo-bar">Entwurf für {{ s.name }} · unverbindlich erstellt von {{ s.demo_von or "[Ihr Name]" }}</div>{% endif %}
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="{{ home or '#top' }}">{{ s.name }}</a>
+    <nav class="nav" aria-label="Hauptmenü">
+      {% block navlinks %}{% endblock %}
+      <a href="{{ home }}#zeiten">{{ zeiten_label }}</a>
+      <a href="{{ home }}#anfahrt">Anfahrt</a>
+    </nav>
+    <a class="btn btn-primary top-cta" href="{{ cta.href }}"{% if cta.ext %} target="_blank" rel="noopener"{% endif %}>{{ cta.label }}</a>
+  </div>
+</header>
+{% if s.hinweis %}<div class="notice"><div class="wrap">{{ s.hinweis }}</div></div>{% endif %}
+
+<main id="top">
+{% block main %}{% endblock %}
+
+{% if not legal %}
+<section id="zeiten" style="background:var(--surface)">
+  <div class="wrap info-grid">
+    <div>
+      <div class="sec-head"><span class="eyebrow">{{ zeiten_label }}</span><h2>{% block zeiten_titel %}Wann wir für Sie da sind{% endblock %}</h2></div>
+      <span class="status" id="status" hidden><i></i><span></span></span>
+      <table class="hours" id="hours" style="margin-top:18px">
+        {% for d in hours %}<tr data-day="{{ d.idx }}"><td>{{ d.name }}</td><td>{{ d.text }}</td></tr>
+        {% endfor %}
+      </table>
+      {% if s.zeiten_hinweis %}<p class="small" style="margin-top:12px">{{ s.zeiten_hinweis }}</p>{% endif %}
+    </div>
+    <div class="place" id="anfahrt">
+      <div class="sec-head" style="margin-bottom:8px"><span class="eyebrow">Anfahrt</span><h2>{% if quadrat %}Mitten in den Quadraten{% else %}So finden Sie uns{% endif %}</h2></div>
+      <div class="place-row">
+        {% if quadrat %}<span class="quadrat" aria-hidden="true">{{ quadrat }}</span>{% endif %}
+        <address>{{ s.adresse.strasse }}<br>{{ s.adresse.plz }} {{ s.adresse.ort }}</address>
+      </div>
+      {% if s.anfahrt %}<p class="small">{{ s.anfahrt }}</p>{% endif %}
+      <div class="btns">
+        <a class="btn btn-primary" href="{{ maps_url }}" target="_blank" rel="noopener">{{ icons.route | safe }} Route planen</a>
+        <a class="btn btn-ghost" href="tel:{{ tel_link }}">{{ icons.phone | safe }} {{ s.telefon }}</a>
+      </div>
+      {% if s.email %}<p class="small">E-Mail: <a href="mailto:{{ s.email }}">{{ s.email }}</a></p>{% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© {{ jahr }} {{ s.name }} · {{ s.adresse.strasse }}, {{ s.adresse.plz }} {{ s.adresse.ort }}</span>
+    <nav aria-label="Rechtliches">
+      {% if s.instagram %}<a href="https://instagram.com/{{ s.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<nav class="mbar" aria-label="Schnellzugriff">
+  <a href="tel:{{ tel_link }}">{{ icons.phone | safe }}Anrufen</a>
+  {% if cta.icon == "phone" %}<a class="main" href="{{ home }}{{ mitte.href }}">{{ icons.list | safe }}{{ mitte.label }}</a>
+  {% else %}<a class="main" href="{{ cta.href }}"{% if cta.ext %} target="_blank" rel="noopener"{% endif %}>{{ icons[cta.icon] | safe }}{{ cta.short }}</a>{% endif %}
+  <a href="{{ maps_url }}" target="_blank" rel="noopener">{{ icons.route | safe }}Route</a>
+</nav>
+
+<script>
+(function(){
+  var H = {{ hours_json | safe }};
+  var now = new Date(), d = (now.getDay() + 6) % 7, m = now.getHours() * 60 + now.getMinutes();
+  var row = document.querySelector('#hours tr[data-day="' + d + '"]');
+  if (row) row.classList.add('today');
+  var open = (H[d] || []).some(function(r){ return m >= r[0] && m < r[1]; });
+  var el = document.getElementById('status');
+  if (!el) return;
+  var next = '';
+  if (open) { var r = H[d].filter(function(r){ return m >= r[0] && m < r[1]; })[0]; next = 'Jetzt geöffnet · bis ' + fmt(r[1]); }
+  else {
+    var later = (H[d] || []).filter(function(r){ return r[0] > m; })[0];
+    if (later) next = 'Geschlossen · öffnet heute um ' + fmt(later[0]);
+    else { for (var i = 1; i <= 7; i++) { var dd = (d + i) % 7; if ((H[dd] || []).length) { next = 'Geschlossen · öffnet ' + {{ day_names_json | safe }}[dd] + ' um ' + fmt(H[dd][0][0]); break; } } }
+  }
+  el.classList.add(open ? 'open' : 'closed'); el.querySelector('span').textContent = next || 'Geschlossen'; el.hidden = false;
+  document.querySelectorAll('[data-status]').forEach(function(x){ x.className = el.className; x.innerHTML = el.innerHTML; x.hidden = false; });
+  function fmt(v){ var h = Math.floor(v / 60), mi = v % 60; return h + (mi ? ':' + String(mi).padStart(2, '0') : '') + ' Uhr'; }
+})();
+</script>
+</body>
+</html>

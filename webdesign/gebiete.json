@@ -1,0 +1,29 @@
+{
+  "_hinweis": "Dein Gebiet: Großraum Tübingen inkl. Tübinger Kernstadt, Reutlingen und Metzingen (Auftrag seit 11.10.2026). Reihenfolge = Vorschlag.",
+  "orte": [
+    {"name": "Tübingen", "einwohner_ca": 92000, "prio": 1},
+    {"name": "Reutlingen", "einwohner_ca": 117000, "prio": 1},
+    {"name": "Metzingen", "einwohner_ca": 22000, "prio": 1},
+    {"name": "Rottenburg am Neckar", "einwohner_ca": 44000, "prio": 1},
+    {"name": "Mössingen", "einwohner_ca": 20000, "prio": 1},
+    {"name": "Herrenberg", "einwohner_ca": 31000, "prio": 1},
+    {"name": "Kirchentellinsfurt", "einwohner_ca": 5500, "prio": 2},
+    {"name": "Kusterdingen", "einwohner_ca": 8700, "prio": 2},
+    {"name": "Ammerbuch", "einwohner_ca": 11500, "prio": 2},
+    {"name": "Dußlingen", "einwohner_ca": 6000, "prio": 2},
+    {"name": "Gomaringen", "einwohner_ca": 9000, "prio": 2},
+    {"name": "Ofterdingen", "einwohner_ca": 5000, "prio": 3},
+    {"name": "Nehren", "einwohner_ca": 4500, "prio": 3},
+    {"name": "Bodelshausen", "einwohner_ca": 6000, "prio": 3},
+    {"name": "Hirrlingen", "einwohner_ca": 3000, "prio": 3},
+    {"name": "Starzach", "einwohner_ca": 4500, "prio": 3},
+    {"name": "Tübinger Teilorte außerhalb der Kernstadt: Unterjesingen, Hirschau, Bühl, Kilchberg, Weilheim, Hagelloch, Pfrondorf, Bebenhausen", "prio": 2},
+    {"name": "Böblingen", "einwohner_ca": 51000, "prio": 2, "bereich": "Böblingen-Sindelfingen (eigener Ordner arbeit/boeblingen-sindelfingen)"},
+    {"name": "Sindelfingen", "einwohner_ca": 65000, "prio": 2, "bereich": "Böblingen-Sindelfingen (eigener Ordner arbeit/boeblingen-sindelfingen)"}
+  ],
+  "nach_absprache": [],
+  "landkreise": [
+    {"name": "Landkreis Sigmaringen", "bereich": "Singen-Sigmaringen (arbeit/singen-sigmaringen)"},
+    {"name": "Landkreis Konstanz", "bereich": "Singen-Sigmaringen (arbeit/singen-sigmaringen)"}
+  ]
+}

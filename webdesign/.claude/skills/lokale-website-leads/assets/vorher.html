@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suche</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#202124;font-size:15px}
+.bar{display:flex;align-items:center;gap:14px;padding:18px 24px;border-bottom:1px solid #e3e3e3}
+.lupe{width:28px;height:28px;border-radius:50%;border:3px solid #9aa0a6;position:relative;flex:none}
+.lupe::after{content:"";position:absolute;width:3px;height:11px;background:#9aa0a6;right:-6px;bottom:-9px;transform:rotate(-45deg)}
+.q{flex:1;border:1px solid #dfe1e5;border-radius:24px;padding:11px 20px;font-size:16px;box-shadow:0 1px 4px rgba(32,33,36,.12)}
+.tabs{display:flex;gap:22px;padding:10px 24px 0 66px;font-size:13.5px;color:#5f6368;border-bottom:1px solid #ebebeb}
+.tabs span{padding-bottom:10px}.tabs span:first-child{color:#1a0dab;border-bottom:3px solid #1a0dab}
+.main{display:grid;grid-template-columns:minmax(0,640px) minmax(0,380px);gap:56px;padding:20px 24px 40px 66px}
+.r{margin-bottom:26px}
+.src{display:flex;align-items:center;gap:10px;font-size:13px}
+.fav{width:26px;height:26px;border-radius:50%;background:#f1f3f4;display:grid;place-items:center;font-size:11px;font-weight:700;color:#5f6368;flex:none}
+.src b{display:block;font-weight:400;color:#202124;font-size:14px}
+.src small{color:#4d5156}
+.r h3{margin:6px 0 4px;font-weight:400;font-size:20px;color:#1a0dab}
+.r p{margin:0;color:#4d5156;line-height:1.55}
+.panel{border:1px solid #dadce0;border-radius:10px;padding:18px 20px;align-self:start}
+.panel h2{margin:0;font-size:24px;font-weight:400}
+.panel .typ{color:#70757a;margin:4px 0 14px}
+.panel .btns{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.panel .btn{border:1px solid #dadce0;border-radius:18px;padding:7px 14px;font-size:13.5px;color:#1a73e8}
+.panel .btn.leer{color:#b3261e;border-color:#f2b8b5;background:#fdecea;font-weight:700}
+.panel dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 10px;font-size:14px}
+.panel dt{font-weight:700}
+.panel dd{margin:0;color:#3c4043}
+.panel dd.leer{color:#b3261e;font-weight:700}
+.note{position:fixed;left:0;right:0;bottom:0;background:#202124;color:#fff;font-size:12px;text-align:center;padding:6px}
+@media(max-width:700px){
+  .bar{padding:14px}.tabs{padding-left:14px;overflow:hidden;white-space:nowrap}
+  .main{grid-template-columns:minmax(0,1fr);padding:14px;gap:18px}
+  .panel{order:-1}
+  .r h3{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div class="bar"><span class="lupe" aria-hidden="true"></span><div class="q" id="q"></div></div>
+<div class="tabs"><span>Alle</span><span>Maps</span><span>Bilder</span><span>News</span></div>
+<div class="main">
+  <div id="res"></div>
+  <aside class="panel">
+    <h2 id="pn"></h2>
+    <div class="typ" id="pt"></div>
+    <div class="btns"><span class="btn">Route</span><span class="btn">Anrufen</span><span class="btn leer">Keine Website</span></div>
+    <dl><dt>Adresse:</dt><dd id="pa"></dd><dt>Website:</dt><dd class="leer">nicht vorhanden</dd><dt>Speisekarte / Preise:</dt><dd id="pp"></dd></dl>
+  </aside>
+</div>
+<div class="note">Nachgestellte Darstellung · zeigt sinngemäß, was Kunden heute bei der Suche finden</div>
+<script>
+var D = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+document.getElementById('q').textContent = D.q;
+document.getElementById('pn').textContent = D.name;
+document.getElementById('pt').textContent = D.typ;
+document.getElementById('pa').textContent = D.adresse;
+document.getElementById('pp').textContent = D.preise;
+document.getElementById('res').innerHTML = D.treffer.map(function(t){
+  return '<div class="r"><div class="src"><span class="fav">' + t.kurz + '</span><span><b>' + t.seite + '</b><small>' + t.url + '</small></span></div><h3>' + t.titel + '</h3><p>' + t.text + '</p></div>';
+}).join('');
+</script>
+</body>
+</html>

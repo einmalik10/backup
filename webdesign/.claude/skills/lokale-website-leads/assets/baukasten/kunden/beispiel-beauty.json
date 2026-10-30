@@ -1,0 +1,53 @@
+{
+  "branche": "beauty",
+  "slug": "beispiel-beauty",
+  "demo": true,
+  "demo_von": "[Ihr Name]",
+  "name": "Studio Nordlicht",
+  "claim": "Friseur in den Quadraten",
+  "hero_titel": "Haare, die zu <em>Ihnen</em> passen.",
+  "intro": "Schnitt, Farbe und Pflege mitten in Mannheim. Wir nehmen uns Zeit für Beratung und arbeiten mit pflanzenbasierten Produkten.",
+  "farbe": "#6d3b5e",
+  "adresse": { "strasse": "O4 12", "plz": "68161", "ort": "Mannheim" },
+  "anfahrt": "Zwei Minuten von der Haltestelle Paradeplatz. Parkhaus N2 gegenüber.",
+  "telefon": "0621 1234567",
+  "whatsapp": "",
+  "email": "hallo@beispiel.de",
+  "instagram": "",
+  "buchung_url": "",
+  "oeffnungszeiten": {
+    "di": ["09:00-18:00"],
+    "mi": ["09:00-18:00"],
+    "do": ["10:00-20:00"],
+    "fr": ["09:00-18:00"],
+    "sa": ["09:00-15:00"]
+  },
+  "zeiten_hinweis": "Termine nach Vereinbarung, spontan gern nach Rückfrage.",
+  "preise_hinweis": "Alle Preise inklusive Beratung und Styling. Lange Haare nach Aufwand.",
+  "leistungen": [
+    { "kategorie": "Damen", "eintraege": [
+      { "name": "Waschen, Schneiden, Föhnen", "preis": "ab 52 €", "dauer": "60 Min." },
+      { "name": "Pony nachschneiden", "preis": "12 €", "dauer": "15 Min." },
+      { "name": "Färben inkl. Schnitt", "preis": "ab 95 €", "dauer": "2 Std." },
+      { "name": "Balayage", "preis": "ab 160 €", "dauer": "3 Std.", "info": "Beratung vorab kostenlos" }
+    ]},
+    { "kategorie": "Herren", "eintraege": [
+      { "name": "Haarschnitt", "preis": "32 €", "dauer": "30 Min." },
+      { "name": "Maschinenschnitt", "preis": "22 €", "dauer": "20 Min." },
+      { "name": "Bart in Form", "preis": "15 €", "dauer": "15 Min." }
+    ]},
+    { "kategorie": "Pflege", "eintraege": [
+      { "name": "Intensiv-Kur", "preis": "18 €" },
+      { "name": "Kopfmassage", "preis": "12 €", "dauer": "10 Min." }
+    ]},
+    { "kategorie": "Kinder", "eintraege": [
+      { "name": "Bis 12 Jahre", "preis": "18 €" }
+    ]}
+  ],
+  "team": [
+    { "name": "Lina", "rolle": "Inhaberin, Colorationen" },
+    { "name": "Deniz", "rolle": "Herrenschnitte und Bart" }
+  ],
+  "bilder": {},
+  "impressum": { "inhaber": "" }
+}

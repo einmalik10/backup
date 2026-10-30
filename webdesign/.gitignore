@@ -1,0 +1,38 @@
+# Obsidian: nur persönliche Fenster-/Layoutdaten ignorieren
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+
+# Geheimnisse
+.env
+.env.*
+*.key
+*.pem
+
+# Arbeitsdaten, nicht ins Repo (Datenschutz, Markenrechte)
+leads/
+arbeit/
+pruefung.json
+leads.json
+leadboard.html
+kunden.py
+osm.json
+audit.json
+audit.csv
+showcase-*/
+mappen/
+img/
+vorschau-*.png
+kontaktbogen.*
+
+# Python und Node
+__pycache__/
+*.pyc
+node_modules/
+out/
+.DS_Store
+Thumbs.db
+
+# Vorlagen im Skill bleiben im Repo
+!.claude/skills/lokale-website-leads/assets/leadboard/leadboard.html
+!.claude/skills/lokale-website-leads/assets/leadboard/pruefung_beispiel.json

@@ -1,0 +1,110 @@
+{% extends "_base.html" %}
+{% block tokens %}
+  --bg:#f7f6f8; --surface:#efecf0; --ink:#1f1a22; --muted:#625b66; --line:#ddd7df;
+  --f-display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-body:"Jost","Segoe UI",system-ui,sans-serif;
+  --display-weight:600; --display-tracking:-0.01em;
+  --radius-card:4px; --radius-btn:999px;
+{% endblock %}
+{% block css %}
+.hero{padding-block:40px 56px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:center}
+@media (min-width:860px){.hero .wrap{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px}.hero{padding-block:72px 88px}}
+.hero h1{font-size:clamp(46px,10vw,84px);letter-spacing:-0.02em}
+.hero h1 em{font-style:italic;color:var(--brand)}
+.hero .lead{font-size:19px;color:var(--muted);max-width:520px}
+.hero .copy{display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.hero .btns{display:flex;flex-wrap:wrap;gap:10px}
+.hero-img{position:relative}
+.hero-img img,.hero-img .ph{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:200px 200px 4px 4px}
+.prices{display:grid;grid-template-columns:minmax(0,1fr);gap:40px}
+@media (min-width:860px){.prices{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 64px}}
+.prices h3{font-size:30px;margin-bottom:10px;padding-bottom:10px;border-bottom:1.5px solid var(--ink)}
+.price-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.price-row .n{font-weight:500}
+.price-row .p{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.price-row .d{grid-column:1/-1;font-size:14.5px;color:var(--muted)}
+.team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (min-width:760px){.team{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.team figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.team img,.team .ph{aspect-ratio:1;width:100%;object-fit:cover;border-radius:50%}
+.team figcaption b{display:block;font-family:var(--f-display);font-size:22px}
+.team figcaption span{font-size:14.5px;color:var(--muted)}
+.book{background:var(--ink);color:var(--bg);text-align:center}
+.book .wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+.book p{color:color-mix(in srgb,var(--bg) 75%,transparent);max-width:520px}
+.book .btn-ghost{color:var(--bg)}
+{% endblock %}
+{% block navlinks %}<a href="{{ home }}#preise">Preise</a>{% if s.team %}<a href="{{ home }}#team">Team</a>{% endif %}{% if s.bilder.galerie %}<a href="{{ home }}#galerie">Einblicke</a>{% endif %}{% endblock %}
+{% block main %}
+<section class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <span class="status" data-status hidden></span>
+      <h1>{{ s.hero_titel | safe if s.hero_titel else s.name }}</h1>
+      <p class="lead">{{ s.intro }}</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="{{ cta.href }}"{% if cta.ext %} target="_blank" rel="noopener"{% endif %}>{{ icons[cta.icon] | safe }} {{ cta.label }}</a>
+        <a class="btn btn-ghost" href="#preise">Preise ansehen</a>
+      </div>
+      {% if s.bewertung %}<a class="rating" href="{{ s.bewertung.url }}" target="_blank" rel="noopener"><span class="stars" aria-hidden="true">★★★★★</span><b>{{ s.bewertung.sterne }}</b><span>aus {{ s.bewertung.anzahl }} Google-Bewertungen</span></a>{% endif %}
+    </div>
+    <div class="hero-img">
+      {% if s.bilder.hero %}<img src="{{ s.bilder.hero }}" alt="{{ s.bilder.hero_alt or ('Einblick in ' ~ s.name) }}" width="800" height="1000">
+      {% else %}<div class="ph">Foto vom Salon<br>(aus Google-Profil oder Instagram)</div>{% endif %}
+    </div>
+  </div>
+</section>
+
+<section id="preise">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Leistungen &amp; Preise</span><h2>Unsere Preise</h2>{% if s.preise_hinweis %}<p>{{ s.preise_hinweis }}</p>{% endif %}</div>
+    <div class="prices">
+      {% for k in s.leistungen %}
+      <div>
+        <h3>{{ k.kategorie }}</h3>
+        {% for e in k.eintraege %}
+        <div class="price-row"><span class="n">{{ e.name }}</span><span class="p">{{ e.preis }}</span>{% if e.dauer or e.info %}<span class="d">{{ e.dauer }}{% if e.dauer and e.info %} · {% endif %}{{ e.info }}</span>{% endif %}</div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if s.team %}
+<section id="team" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Team</span><h2>Die Menschen hinter dem Stuhl</h2></div>
+    <div class="team">
+      {% for t in s.team %}
+      <figure>{% if t.bild %}<img src="{{ t.bild }}" alt="{{ t.name }}" loading="lazy">{% else %}<div class="ph">Foto</div>{% endif %}
+        <figcaption><b>{{ t.name }}</b><span>{{ t.rolle }}</span></figcaption></figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section id="galerie" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Einblicke</span><h2>Aus dem Salon</h2></div>
+    <div class="gallery">
+      {% if s.bilder.galerie %}{% for b in s.bilder.galerie %}<img src="{{ b }}" alt="Arbeit aus dem Salon {{ s.name }}" loading="lazy">{% endfor %}
+      {% else %}{% for i in range(6) %}<div class="ph">Foto {{ i + 1 }}</div>{% endfor %}{% endif %}
+    </div>
+    {% if s.instagram %}<p style="margin-top:18px"><a href="https://instagram.com/{{ s.instagram }}" target="_blank" rel="noopener">Mehr auf Instagram: @{{ s.instagram }}</a></p>{% endif %}
+  </div>
+</section>
+
+<section class="book">
+  <div class="wrap">
+    <h2>Lust auf etwas Neues?</h2>
+    <p>{{ s.buchung_text or "Buchen Sie Ihren Termin online, rund um die Uhr. Oder rufen Sie uns einfach an." }}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+      <a class="btn btn-primary" href="{{ cta.href }}"{% if cta.ext %} target="_blank" rel="noopener"{% endif %}>{{ cta.label }}</a>
+      <a class="btn btn-ghost" href="tel:{{ tel_link }}">{{ s.telefon }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

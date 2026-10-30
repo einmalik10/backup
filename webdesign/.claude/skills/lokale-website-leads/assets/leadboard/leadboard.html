@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>__TITLE__</title>
+<style>
+/* Lead-Board: Pipeline-Leiste oben, Filter, links Liste, rechts Detailkarte. Läuft komplett lokal, Daten bleiben im Browser. */
+:root{
+  color-scheme:light;
+  --bg:#f3f2ef; --panel:#ffffff; --ink:#1d1f22; --muted:#66696f; --line:#dedbd5;
+  --accent:#a8432c; --accent-ink:#ffffff; --accent-soft:#f4e3dd;
+  --hot:#c2361f; --warm:#c98410; --cold:#4f79a6; --out:#8b8d92; --done:#2f8a57; --won:#6b46b8; --new:#c9c6bf;
+  --f-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#17181a; --panel:#202225; --ink:#ecebe8; --muted:#a2a4a9; --line:#34363a;
+  --accent:#e0775d; --accent-ink:#1a0c08; --accent-soft:#3a2520;
+  --hot:#f0664c; --warm:#e6a73a; --cold:#7fa6d4; --out:#8f9196; --done:#5cc48a; --won:#a48ae6; --new:#4a4c50}}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+img{max-width:100%}
+[hidden]{display:none!important}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:18px 40px;display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px}
+h1{font-size:26px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1 small{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400;margin-left:8px;letter-spacing:.02em}
+.sync{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.pipe{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.pipe button{all:unset;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.pipe button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pipe button[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.pipe b{font-size:22px;font-variant-numeric:tabular-nums;line-height:1}
+.pipe span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pipe i{display:block;height:3px;border-radius:2px;margin-top:4px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.filters input,.filters select{font:inherit;font-size:14px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px;min-width:0}
+.filters input[type=search]{flex:1 1 220px}
+.filters label{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+.btn{font:inherit;font-size:14px;cursor:pointer;border-radius:8px;padding:7px 12px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.btn:hover{border-color:var(--muted)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:start}
+.list{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+.list-h{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:space-between;padding:8px 12px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);font-family:var(--f-mono)}
+.rows{max-height:calc(100vh - 300px);min-height:320px;overflow-y:auto}
+.rows:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.row{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px 9px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.row:hover,.row[aria-selected="true"]{background:var(--accent-soft)}
+.row .stripe{align-self:stretch;border-radius:0 2px 2px 0}
+.row .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .sub{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .nm,.row .sub{min-width:0}
+.score{font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums;text-align:right}
+.score small{display:block;font-size:10.5px;color:var(--muted)}
+.chip{display:inline-block;font-size:11px;letter-spacing:.04em;padding:1px 7px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin-right:4px;vertical-align:1px}
+.chip.ok{color:var(--done);border-color:currentColor}
+.chip.q{font-family:var(--f-mono);color:var(--ink)}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px;position:sticky;top:12px;min-width:0}
+.detail h2{margin:0;font-size:22px;text-wrap:balance}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.kv{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 12px;font-size:14px;margin:0}
+.kv dt{color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;padding-top:3px}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.kv a{color:var(--accent)}
+.pitch{background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:14.5px}
+.pitch b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:3px}
+.cls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.cls button{font:inherit;font-size:13.5px;cursor:pointer;padding:9px 4px;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--ink);display:flex;justify-content:center;gap:6px;align-items:center;min-width:0}
+.cls button kbd{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+.cls button[aria-pressed="true"]{color:var(--accent-ink);border-color:transparent}
+.cls button[aria-pressed="true"] kbd{color:inherit;border-color:currentColor}
+.cls button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sec{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 -6px}
+textarea{font:inherit;font-size:14px;width:100%;min-height:76px;resize:vertical;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.hint{font-size:12px;color:var(--muted);font-family:var(--f-mono)}
+.copy{font:inherit;font-size:11px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:4px;padding:0 6px;margin-left:6px}
+.empty{padding:40px 16px;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:14px;z-index:9}
+.back{display:none}
+.nav2{display:flex;gap:6px;justify-content:space-between;flex-wrap:wrap}
+@media (max-width:820px){
+  .pipe{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .main{grid-template-columns:minmax(0,1fr)}
+  .rows{max-height:none}
+  .list-h span:last-child{display:none}
+  .detail{position:fixed;inset:0;border-radius:0;border:0;overflow-y:auto;z-index:5;padding:16px 16px 24px}
+  .detail.closed{display:none}
+  .back{display:inline-block}
+  .kv{grid-template-columns:88px minmax(0,1fr)}
+  .cls{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.chip.top{background:#1f6f43;color:#fff;border-color:#1f6f43;font-weight:700}
+.own{font-weight:600;color:var(--ink,#222)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>__TITLE__ <small>__SUB__</small></h1>
+    <span class="sync" id="sync">Daten nur lokal in diesem Browser · Stand __STAMP__</span>
+  </header>
+  <nav class="pipe" id="pipe" aria-label="Nach Einstufung filtern"></nav>
+  <div class="filters">
+    <input type="search" id="q" placeholder="Suche: Name, Straße, Problem, Notiz …" aria-label="Suche">
+    <select id="fList" aria-label="Liste"><option value="">Beide Listen</option><option value="bad">Schlechte Website</option><option value="none">Keine Website</option></select>
+    <select id="fGroup" aria-label="Branche"><option value="">Alle Branchen</option></select>
+    <select id="fOrt" aria-label="Ort" hidden><option value="">Alle Orte</option></select>
+    <select id="fSort" aria-label="Sortierung"><option value="score">Sortiert: Score</option><option value="q">Sortiert: Straße (Laufroute)</option><option value="name">Sortiert: Name</option><option value="t">Sortiert: zuletzt bearbeitet</option></select>
+    <label><input type="checkbox" id="fTop"> nur Top-Leads</label>
+    <label><input type="checkbox" id="fOk"> nur bestätigt offen</label>
+    <button class="btn" id="exp" type="button">Gefilterte als CSV</button>
+    <button class="btn" id="bak" type="button" title="Einstufungen und Notizen als Datei sichern">Backup</button>
+    <button class="btn" id="imp" type="button" title="Backup-Datei laden">Backup laden</button>
+    <input type="file" id="impf" accept="application/json" hidden>
+  </div>
+  <div class="main">
+    <section class="list" aria-label="Leads">
+      <div class="list-h"><span id="cnt"></span><span>J/K blättern · 1–7 einstufen · N Notiz · / Suche</span></div>
+      <div class="rows" id="rows" role="listbox" tabindex="0" aria-label="Lead-Liste"></div>
+    </section>
+    <article class="detail closed" id="detail"></article>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script id="leads" type="application/json">/*__LEADS__*/[]</script>
+<script>
+const LEADS = JSON.parse(document.getElementById('leads').textContent);
+const KEY = '__KEY__';
+const ST = [
+  {k:'neu',   l:'Neu',          c:'--new'},
+  {k:'hot',   l:'Hot',          c:'--hot'},
+  {k:'warm',  l:'Warm',         c:'--warm'},
+  {k:'kalt',  l:'Kalt',         c:'--cold'},
+  {k:'raus',  l:'Kein Lead',    c:'--out'},
+  {k:'kontakt',l:'Kontaktiert', c:'--done'},
+  {k:'termin',l:'Termin',       c:'--won'},
+  {k:'gewonnen',l:'Gewonnen',   c:'--accent'},
+];
+const STK = Object.fromEntries(ST.map(s=>[s.k,s]));
+const tri = {};           // id -> {s, note, t}
+let sel = null, view = [];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const st = id => (tri[id] && tri[id].s) || 'neu';
+const filt = {status:'', list:'', group:'', ort:'', ok:false, q:'', sort:'score'};
+try { Object.assign(filt, JSON.parse(localStorage.getItem(KEY+'-filter') || '{}')); } catch(e) {}
+try { Object.assign(tri, JSON.parse(localStorage.getItem(KEY+'-local') || '{}')); } catch(e) {}
+
+[...new Set(LEADS.map(l=>l.group))].sort().forEach(g => $('fGroup').insertAdjacentHTML('beforeend', `<option>${esc(g)}</option>`));
+const ORTE = [...new Set(LEADS.map(l=>l.ort).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'de'));
+if (ORTE.length > 1) { ORTE.forEach(o => $('fOrt').insertAdjacentHTML('beforeend', `<option>${esc(o)}</option>`)); $('fOrt').hidden = false; }
+if (filt.ort && !ORTE.includes(filt.ort)) filt.ort = '';
+['fList','fGroup','fOrt','fSort'].forEach(id => { const k={fList:'list',fGroup:'group',fOrt:'ort',fSort:'sort'}[id]; $(id).value = filt[k]; $(id).onchange = e => { filt[k]=e.target.value; saveFilter(); render(); }; });
+if (filt.top === undefined) filt.top = LEADS.some(l=>l.top);
+$('fTop').checked = filt.top; $('fTop').onchange = e => { filt.top = e.target.checked; saveFilter(); render(); };
+$('fOk').checked = filt.ok; $('fOk').onchange = e => { filt.ok = e.target.checked; saveFilter(); render(); };
+$('q').value = filt.q; $('q').oninput = e => { filt.q = e.target.value; saveFilter(); render(); };
+function saveFilter(){ try { localStorage.setItem(KEY+'-filter', JSON.stringify(filt)); } catch(e) {} }
+
+function render(){
+  const q = filt.q.trim().toLowerCase();
+  view = LEADS.filter(l => (!filt.status || st(l.id)===filt.status) && (!filt.list || l.list===filt.list) && (!filt.group || l.group===filt.group) && (!filt.ort || l.ort===filt.ort) && (!filt.ok || l.ok) && (!filt.top || l.top)
+    && (!q || [l.name,l.inhaber,l.cat,l.addr,l.ort,l.q,l.reasons,l.auto,l.verdict,l.presence,(tri[l.id]||{}).note].join(' ').toLowerCase().includes(q)));
+  const s = filt.sort;
+  view.sort((a,b)=> (b.top-a.top) || (s==='name' ? a.name.localeCompare(b.name,'de') : s==='q' ? (a.q||'zzz').localeCompare(b.q||'zzz','de') || b.score-a.score : s==='t' ? ((tri[b.id]||{}).t||0)-((tri[a.id]||{}).t||0) : b.score-a.score));
+  const counts = Object.fromEntries(ST.map(x=>[x.k,0])); LEADS.forEach(l=>counts[st(l.id)]++);
+  $('pipe').innerHTML = `<button type="button" data-s="" aria-pressed="${!filt.status}"><b>${LEADS.length}</b><span>Alle</span><i style="background:var(--line)"></i></button>` +
+    ST.filter(x=>x.k!=='gewonnen').map(x=>`<button type="button" data-s="${x.k}" aria-pressed="${filt.status===x.k}"><b>${counts[x.k]}</b><span>${x.l}</span><i style="background:var(${x.c})"></i></button>`).join('');
+  $('pipe').querySelectorAll('button').forEach(b => b.onclick = () => { filt.status = filt.status===b.dataset.s ? '' : b.dataset.s; saveFilter(); render(); });
+  $('cnt').textContent = `${view.length} von ${LEADS.length} Leads` + (counts.gewonnen ? ` · ${counts.gewonnen} gewonnen` : '');
+  $('rows').innerHTML = view.length ? view.map(l => {
+    const s = STK[st(l.id)];
+    return `<div class="row" role="option" data-id="${l.id}" aria-selected="${sel===l.id}">
+      <span class="stripe" style="background:var(${s.c})"></span>
+      <div style="min-width:0"><div class="nm">${esc(l.name)}</div>
+      <div class="sub">${l.top?'<span class="chip top">TOP</span>':''}${l.ort?`<span class="chip">${esc(l.ort)}</span>`:''}${l.q?`<span class="chip q">${esc(l.q)}</span>`:''}${l.ok?'<span class="chip ok">offen</span>':''}${l.inhaber?`<span class="own">${esc(l.inhaber)}</span> · `:''}${esc(l.list==='bad'?'Website schlecht':'Keine Website')} · ${esc(l.group)} · ${esc(l.cat.replace('office:','').replace('healthcare:',''))}</div></div>
+      <div class="score">${l.score}<small>${s.k==='neu'?'Score':esc(s.l)}</small></div></div>`;
+  }).join('') : `<div class="empty">Keine Leads für diese Filter. Setz einen Filter zurück oder leere die Suche.</div>`;
+  $('rows').querySelectorAll('.row').forEach(r => r.onclick = () => select(r.dataset.id, true));
+  if (!sel || !view.find(l=>l.id===sel)) { sel = view[0] && view[0].id; }
+  detail();
+  $('rows').querySelectorAll('.row').forEach(r => r.setAttribute('aria-selected', r.dataset.id===sel));
+}
+function select(id, open){
+  sel = id; $('rows').querySelectorAll('.row').forEach(r => r.setAttribute('aria-selected', r.dataset.id===id));
+  const el = $('rows').querySelector(`[data-id="${id}"]`); if (el) el.scrollIntoView({block:'nearest'});
+  detail(); if (open) $('detail').classList.remove('closed');
+}
+function copyBtn(v){ return v ? `<button class="copy" type="button" data-copy="${esc(v)}">kopieren</button>` : ''; }
+function detail(){
+  const l = LEADS.find(x=>x.id===sel), d = $('detail');
+  if (!l) { d.innerHTML = '<div class="empty">Wähle links einen Lead aus.</div>'; return; }
+  const t = tri[l.id] || {}, s = st(l.id);
+  const web = l.website ? `<a href="${esc(/^https?:/.test(l.website)?l.website:'http://'+l.website)}" target="_blank" rel="noopener">${esc(l.website)}</a>` : '<span style="color:var(--muted)">keine eigene</span>';
+  d.innerHTML = `
+    <div class="nav2"><button class="btn back" type="button" id="bk">← Liste</button>
+      <span class="hint">${view.findIndex(x=>x.id===l.id)+1} / ${view.length} · Score ${l.score}</span></div>
+    <div><h2>${esc(l.name)}</h2>
+      <div class="meta" style="margin-top:6px">${l.q?`<span class="chip q">${esc(l.q)}</span>`:''}<span class="chip">${esc(l.group)}</span><span class="chip">${esc(l.cat)}</span>${l.ok?'<span class="chip ok">offen bestätigt</span>':'<span class="chip">Status ungeprüft</span>'}${l.conf?`<span class="chip">Sicherheit: ${esc(l.conf)}</span>`:''}</div></div>
+    <p class="sec">Einstufen</p>
+    <div class="cls">${ST.filter(x=>x.k!=='neu').map((x,i)=>`<button type="button" data-k="${x.k}" aria-pressed="${s===x.k}" style="${s===x.k?`background:var(${x.c})`:''}">${x.l}<kbd>${i+1}</kbd></button>`).join('')}</div>
+    <dl class="kv">
+      <dt>Inhaber</dt><dd>${l.inhaber ? `<b>${esc(l.inhaber)}</b>${l.inhaber_quelle?` <span class="chip">laut ${esc(l.inhaber_quelle)}</span>`:''}` : '<span style="color:var(--muted)">unbekannt, vor Ort erfragen</span>'}${l.ig===true?' <span class="chip ok">inhabergeführt</span>':l.ig===false?' <span class="chip">Filiale/angestellt</span>':''}</dd>
+      ${l.top ? `<dt>Top-Lead</dt><dd>${esc(l.top_warum)}</dd>` : ''}
+      ${l.bew ? `<dt>Google</dt><dd>${l.bew} Bewertungen${l.sterne?' · '+l.sterne+' ★':''}</dd>` : ''}
+      <dt>Problem</dt><dd>${esc(l.list==='bad' ? (l.reasons || l.auto) : (l.presence ? 'Online nur: '+l.presence : 'Keine eigene Website') + (l.reasons ? ' – '+l.reasons : ''))}</dd>
+      ${l.auto && l.list==='bad' ? `<dt>Auto-Check</dt><dd>${esc(l.auto)}</dd>` : ''}
+      <dt>Website</dt><dd>${web}</dd>
+      <dt>Adresse</dt><dd>${esc([l.addr, l.ort].filter(Boolean).join(', ') || '–')} · <a href="${esc(l.maps)}" target="_blank" rel="noopener">Google Maps</a></dd>
+      <dt>Telefon</dt><dd>${l.phone ? esc(l.phone)+copyBtn(l.phone) : '–'}</dd>
+      ${l.email ? `<dt>E-Mail</dt><dd>${esc(l.email)}${copyBtn(l.email)}</dd>` : ''}
+      ${l.insta ? `<dt>Instagram</dt><dd>${esc(l.insta)}</dd>` : ''}
+    </dl>
+    ${l.pitch ? `<div class="pitch"><b>Pitch-Idee</b>${esc(l.pitch)}</div>` : ''}
+    <div><p class="sec" style="margin-bottom:6px">Notiz</p>
+      <textarea id="note" placeholder="z. B. Inhaber heißt …, Di nachmittags vorbeigehen, will Online-Buchung">${esc(t.note||'')}</textarea>
+      <div class="hint" id="nh">${t.t ? 'Zuletzt bearbeitet '+new Date(t.t).toLocaleString('de-DE',{dateStyle:'short',timeStyle:'short'}) : 'Speichert beim Verlassen des Feldes'}</div></div>`;
+  d.querySelectorAll('.cls button').forEach(b => b.onclick = () => setStatus(l.id, s===b.dataset.k ? 'neu' : b.dataset.k));
+  d.querySelectorAll('[data-copy]').forEach(b => b.onclick = () => copy(b.dataset.copy));
+  $('bk').onclick = () => d.classList.add('closed');
+  $('note').onblur = e => { if ((t.note||'') !== e.target.value) write(l.id, {note:e.target.value}); };
+}
+function toast(m){ const t=$('toast'); t.textContent=m; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,1800); }
+function copy(v){ navigator.clipboard.writeText(v).then(()=>toast('Kopiert'), ()=>toast('Kopieren nicht möglich, bitte markieren')); }
+function setStatus(id, k){
+  write(id, {s:k});
+  const i = view.findIndex(x=>x.id===id);
+  toast(`${LEADS.find(x=>x.id===id).name}: ${STK[k].l}`);
+  render();
+  if (filt.status && filt.status!==k) { const n = view[i] || view[i-1]; if (n) select(n.id); }
+}
+function write(id, patch){
+  tri[id] = {...(tri[id]||{s:'neu',note:''}), ...patch, t:Date.now()};
+  try { localStorage.setItem(KEY+'-local', JSON.stringify(tri)); $('sync').textContent = 'Gespeichert (nur in diesem Browser) · Backup-Knopf nutzen'; }
+  catch(e) { $('sync').textContent = 'Speichern im Browser nicht möglich – bitte Backup herunterladen'; }
+}
+function download(name, text, type){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type}));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+}
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input,textarea,select') || e.ctrlKey || e.metaKey || e.altKey) { if (e.key==='Escape') e.target.blur(); return; }
+  const i = view.findIndex(x=>x.id===sel);
+  if (e.key==='j' || e.key==='ArrowDown') { e.preventDefault(); if (view[i+1]) select(view[i+1].id); }
+  else if (e.key==='k' || e.key==='ArrowUp') { e.preventDefault(); if (view[i-1]) select(view[i-1].id); }
+  else if (/^[1-7]$/.test(e.key) && sel) { const k = ST[+e.key].k; setStatus(sel, st(sel)===k ? 'neu' : k); }
+  else if (e.key==='n' && sel) { e.preventDefault(); $('detail').classList.remove('closed'); $('note').focus(); }
+  else if (e.key==='/') { e.preventDefault(); $('q').focus(); }
+});
+$('exp').onclick = () => {
+  const cols = ['name','status','score','list','group','cat','ort','q','addr','phone','email','insta','website','reasons','pitch','note','maps'];
+  const rows = view.map(l => ({...l, status: STK[st(l.id)].l, note: (tri[l.id]||{}).note||'', list: l.list==='bad'?'Website schlecht':'Keine Website'}));
+  const csv = '﻿' + [cols.join(';'), ...rows.map(r => cols.map(c => '"'+String(r[c]??'').replace(/"/g,'""')+'"').join(';'))].join('\r\n');
+  download(KEY+'-leads.csv', csv, 'text/csv'); toast('CSV erstellt');
+};
+$('bak').onclick = () => { download(KEY+'-backup.json', JSON.stringify(tri, null, 1), 'application/json'); toast('Backup erstellt'); };
+$('imp').onclick = () => $('impf').click();
+$('impf').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { const o = JSON.parse(await f.text()); Object.assign(tri, o); localStorage.setItem(KEY+'-local', JSON.stringify(tri)); render(); toast('Backup geladen'); }
+  catch(err) { toast('Datei nicht lesbar'); }
+  e.target.value = '';
+};
+render();
+</script>
+</body>
+</html>

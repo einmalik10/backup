@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>MI Visuals · Projekt-Fragebogen</title>
+<!--
+  Quelle für das ausfüllbare PDF. Nicht direkt verschicken, sondern bauen:
+      python vorlagen/fragebogen-pdf/bauen.py
+  Formularfelder: Elemente mit data-feld werden im PDF zu echten Feldern
+  (.f = Textfeld, .f.gross = mehrzeilig, .cb = Kästchen). Jede Seite ist genau A4 (794 × 1123 px).
+-->
+<style>
+@font-face{font-family:"Unbounded";font-weight:500;src:url(fonts/unbounded-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Unbounded";font-weight:700;src:url(fonts/unbounded-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:400;src:url(fonts/space-grotesk-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:500;src:url(fonts/space-grotesk-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Space Grotesk";font-weight:700;src:url(fonts/space-grotesk-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;src:url(fonts/instrument-serif-latin-400-italic.woff2) format("woff2")}
+:root{
+  --gold:#FFB000; --schwarz:#0B0B0C; --karte:#141416; --text-hell:#F2F0EB; --grau-hell:#A3A09A;
+  --papier:#F5F3EE; --tinte:#0B0B0C; --tinte-2:#55524D; --tinte-3:#8C8880; --linie:#DDD8CE; --feld:#FFFFFF;
+  --display:"Unbounded",system-ui,sans-serif; --text:"Space Grotesk",system-ui,sans-serif; --serif:"Instrument Serif",Georgia,serif;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#777}
+body{font:400 12.5px/1.5 var(--text);color:var(--tinte);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:794px;height:1123px;position:relative;overflow:hidden;background:var(--papier);padding:58px 64px 70px;break-after:page}
+.page:last-child{break-after:auto}
+.accent{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+
+/* Kopf und Fuß der Innenseiten */
+.oben{display:flex;justify-content:space-between;align-items:center;font:700 9.5px/1 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--tinte-2);padding-bottom:14px;border-bottom:1px solid var(--linie);margin-bottom:30px}
+.oben .marke{display:flex;align-items:center;gap:9px;color:var(--tinte)}
+.oben b{color:var(--tinte)}
+.unten{position:absolute;left:64px;right:64px;bottom:30px;display:flex;justify-content:space-between;font-size:9.5px;color:var(--tinte-3);border-top:1px solid var(--linie);padding-top:10px}
+.page::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--schwarz)}
+.page::after{content:"";position:absolute;top:0;left:64px;width:90px;height:6px;background:var(--gold)}
+svg.mark{width:22px;height:22px;flex:none}
+
+/* Kapitel */
+.kapitel{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:end;margin-bottom:22px}
+.kapitel .nr{grid-row:1/3;width:46px;height:46px;border-radius:12px;background:var(--schwarz);color:var(--gold);display:grid;place-items:center;font:700 16px/1 var(--display)}
+.kapitel h2{font:700 22px/1.1 var(--display);letter-spacing:-.02em}
+.kapitel h2 .accent{font-size:1.25em;line-height:.8}
+.kapitel p{color:var(--tinte-2);font-size:12.5px}
+.kapitel + .kapitel,.block + .kapitel{margin-top:34px}
+
+/* Fragen und Felder */
+.frage{margin-bottom:16px}
+.frage > .l{display:block;font-weight:700;font-size:12.5px;margin-bottom:6px}
+.frage > .t{display:block;color:var(--tinte-3);font-size:11px;margin:-4px 0 6px}
+.f{height:34px;background:var(--feld);border:1px solid var(--linie);border-radius:8px}
+.f.gross{height:86px}
+.f.mittel{height:62px}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.drei{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+.kaesten{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px 14px}
+.kaesten.zwei-sp{grid-template-columns:1fr 1fr}
+.k{display:flex;align-items:center;gap:9px;min-height:30px;padding:5px 10px;background:var(--feld);border:1px solid var(--linie);border-radius:8px;font-size:11.8px;line-height:1.25}
+.k small{display:block;color:var(--tinte-3);font-size:10.3px}
+.cb{flex:none;width:15px;height:15px;border:1.4px solid var(--tinte);border-radius:4px;background:#fff}
+.hinweis{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-radius:10px;background:var(--schwarz);color:var(--text-hell);font-size:11.3px;margin:4px 0 18px}
+.hinweis::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:4px}
+
+/* Skala */
+.skala{display:grid;grid-template-columns:118px repeat(5,1fr) 118px;align-items:center;gap:6px;margin-bottom:7px;font-size:11.5px}
+.skala .r{text-align:right}
+.skala span.zelle{display:flex;justify-content:center}
+.skala-kopf{font-size:9.5px;color:var(--tinte-3);text-align:center}
+
+/* Stilkarten */
+.stile{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stil{background:var(--feld);border:1px solid var(--linie);border-radius:10px;padding:7px;}
+.stil .v{height:58px;border-radius:7px;padding:9px 10px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.stil .v em{font-style:normal;font-size:17px;line-height:1}
+.stil .v i{display:flex;gap:4px}
+.stil .v i::before,.stil .v i::after{content:"";height:5px;border-radius:3px;background:currentColor}
+.stil .v i::before{width:45%;opacity:.85}.stil .v i::after{width:22%;opacity:.35}
+.stil .u{display:flex;align-items:center;gap:8px;padding:8px 3px 2px;font-weight:700;font-size:11.8px}
+.stil .u small{display:block;font-weight:400;color:var(--tinte-3);font-size:10.2px}
+.v1{background:#f1e9dc;color:#3a2a1c}.v1 em{font-family:Georgia,serif}
+.v2{background:#fff;color:#111;box-shadow:inset 0 0 0 1px #e4e4e4}.v2 em{font-family:var(--text);font-weight:700;letter-spacing:-.04em}
+.v3{background:#e9d9c3;color:#5a2e16}.v3 em{font-family:var(--serif);font-style:italic;font-size:19px}
+.v4{background:#16130f;color:#f2c230}.v4 em{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:13px}
+.v5{background:#e1e9e0;color:#2d4a3a}.v5 em{font-family:var(--text);letter-spacing:.08em}
+.v6{background:#1c2430;color:#d9c6a0}.v6 em{font-family:Georgia,serif;letter-spacing:.16em;text-transform:uppercase;font-size:13px}
+
+/* Titelseite */
+.titel{background:var(--schwarz);color:var(--text-hell);padding:64px 70px}
+.titel::before,.titel::after{display:none}
+.titel .marke{display:flex;align-items:center;gap:12px;font:700 13px/1 var(--display);letter-spacing:.02em}
+.titel .marke svg{width:38px;height:38px}
+.titel .pille{display:inline-block;margin-top:120px;padding:7px 13px;border:1px solid rgba(242,240,235,.28);border-radius:999px;font:700 9.5px/1 var(--text);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.titel h1{font:700 56px/1.02 var(--display);letter-spacing:-.035em;margin-top:26px}
+.titel h1 .accent{color:var(--gold);font-size:1.3em;line-height:.85}
+.titel .lead{font-size:16px;line-height:1.55;color:var(--grau-hell);max-width:470px;margin-top:26px}
+.schritte{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:64px;padding-top:28px;border-top:1px solid rgba(242,240,235,.14)}
+.schritte b{display:block;font:700 26px/1 var(--display);color:var(--gold);margin-bottom:12px}
+.schritte strong{display:block;font-size:13px;color:var(--text-hell);margin-bottom:4px}
+.schritte p{font-size:11.5px;color:var(--grau-hell);line-height:1.5}
+.titel .fuss{position:absolute;left:70px;right:70px;bottom:46px;display:flex;justify-content:space-between;font-size:10.5px;color:var(--grau-hell)}
+.titel .fuss b{color:var(--text-hell);font-weight:500}
+.glow{position:absolute;right:-180px;top:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(255,176,0,.22),rgba(255,176,0,0) 65%)}
+
+/* Schlussseite */
+.danke{margin-top:6px;background:var(--schwarz);color:var(--text-hell);border-radius:16px;padding:30px 32px;position:relative;overflow:hidden}
+.danke h3{font:700 22px/1.15 var(--display);letter-spacing:-.02em}
+.danke h3 .accent{color:var(--gold);font-size:1.25em}
+.danke ol{list-style:none;counter-reset:d;margin-top:18px;display:grid;gap:12px}
+.danke li{counter-increment:d;display:grid;grid-template-columns:28px 1fr;font-size:12.5px;color:var(--grau-hell)}
+.danke li::before{content:counter(d);width:22px;height:22px;border-radius:50%;background:var(--gold);color:var(--schwarz);font:700 11px/22px var(--text);text-align:center}
+.danke li b{color:var(--text-hell);font-weight:500}
+.danke .kontakt{display:flex;gap:28px;margin-top:22px;padding-top:18px;border-top:1px solid rgba(242,240,235,.14);font-size:12px}
+.danke .kontakt span{color:var(--grau-hell);display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:3px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mi" viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#FFB000"/><path transform="translate(21.9 62.75) scale(0.034)" fill="#0B0B0C" d="M1215 -750V0H970V-653L1017 -647L765 0H510L258 -644L305 -651V0H60V-750H459L683 -139H594L816 -750Z M1335 -750H1593V0H1335Z"/></symbol>
+</svg>
+
+<!-- 01 Titel -->
+<section class="page titel">
+  <div class="glow"></div>
+  <div class="marke"><svg class="mark"><use href="#mi"/></svg>MI VISUALS</div>
+  <span class="pille">Projekt-Fragebogen · Website</span>
+  <h1>Erzähl mir von<br>deinem <span class="accent">Betrieb.</span></h1>
+  <p class="lead">Mit deinen Antworten entsteht eine Website, die zu dir passt, nicht zu einer Vorlage. Je mehr ich über dich weiß, desto genauer treffe ich Ton, Bilder und Aufbau.</p>
+  <div class="schritte">
+    <div><b>01</b><strong>Ausfüllen</strong><p>Direkt im PDF tippen und ankreuzen, am Computer oder am Handy. Dauert etwa 10 Minuten.</p></div>
+    <div><b>02</b><strong>Leer lassen ist okay</strong><p>Was du nicht weißt, klären wir im Gespräch. Nur Name und Kontakt brauche ich.</p></div>
+    <div><b>03</b><strong>Zurückschicken</strong><p>PDF speichern und per Mail oder WhatsApp senden. Logo und Fotos gern gleich mit.</p></div>
+  </div>
+  <div class="fuss"><span><b>MI Visuals</b> · Inh. Malik Ismail</span><span>info@mivisuals.de · WhatsApp +49 152 38086847</span></div>
+</section>
+
+<!-- 02 Betrieb + Ziele -->
+<section class="page">
+  <div class="oben"><span class="marke"><svg class="mark"><use href="#mi"/></svg>MI Visuals · Projekt-Fragebogen</span><span><b>02</b> / 07</span></div>
+  <div class="kapitel"><span class="nr">1</span><h2>Dein <span class="accent">Betrieb</span></h2><p>Die Grunddaten, damit ich dich erreiche und weiß, für wen ich gestalte.</p></div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Name des Betriebs *</span><div class="f" data-feld="betrieb"></div></div>
+    <div class="frage"><span class="l">Branche</span><div class="f" data-feld="branche"></div></div>
+  </div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Adresse</span><div class="f" data-feld="adresse"></div></div>
+    <div class="frage"><span class="l">Seit wann gibt es euch?</span><div class="f" data-feld="seit"></div></div>
+  </div>
+  <div class="drei">
+    <div class="frage"><span class="l">Dein Name *</span><div class="f" data-feld="name"></div></div>
+    <div class="frage"><span class="l">Telefon / WhatsApp *</span><div class="f" data-feld="telefon"></div></div>
+    <div class="frage"><span class="l">E-Mail</span><div class="f" data-feld="email"></div></div>
+  </div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Heutige Website (falls vorhanden)</span><div class="f" data-feld="website_alt"></div></div>
+    <div class="frage"><span class="l">Instagram, Facebook, TikTok</span><div class="f" data-feld="social"></div></div>
+  </div>
+
+  <div class="kapitel"><span class="nr">2</span><h2>Deine <span class="accent">Ziele</span></h2><p>Eine gute Website ist ein Mitarbeiter, der rund um die Uhr arbeitet. Welche Aufgabe soll er übernehmen?</p></div>
+  <div class="frage"><span class="l">Was soll die Website bringen? <span style="font-weight:400;color:var(--tinte-3)">Mehrere möglich</span></span>
+    <div class="kaesten">
+      <label class="k"><span class="cb" data-feld="ziel_anrufe"></span>Mehr Anrufe und Anfragen</label>
+      <label class="k"><span class="cb" data-feld="ziel_neukunden"></span>Neue Kunden aus der Nähe</label>
+      <label class="k"><span class="cb" data-feld="ziel_google"></span>Bei Google gefunden werden</label>
+      <label class="k"><span class="cb" data-feld="ziel_buchung"></span>Termine / Reservierungen</label>
+      <label class="k"><span class="cb" data-feld="ziel_karte"></span>Karte / Preise zeigen</label>
+      <label class="k"><span class="cb" data-feld="ziel_shop"></span>Online verkaufen (Shop)</label>
+      <label class="k"><span class="cb" data-feld="ziel_catering"></span>Catering / Großaufträge</label>
+      <label class="k"><span class="cb" data-feld="ziel_personal"></span>Mitarbeiter finden</label>
+      <label class="k"><span class="cb" data-feld="ziel_image"></span>Hochwertiger wirken</label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Was sollen Besucher als Erstes tun? <span style="font-weight:400;color:var(--tinte-3)">Bitte eins ankreuzen</span></span>
+    <div class="kaesten">
+      <label class="k"><span class="cb" data-feld="knopf_anrufen"></span><span>Anrufen<small>Ein Tipp, es klingelt</small></span></label>
+      <label class="k"><span class="cb" data-feld="knopf_whatsapp"></span><span>WhatsApp<small>Für alle, die lieber schreiben</small></span></label>
+      <label class="k"><span class="cb" data-feld="knopf_route"></span><span>Vorbeikommen<small>Route und Zeiten vorne</small></span></label>
+      <label class="k"><span class="cb" data-feld="knopf_buchen"></span><span>Online buchen<small>Termin oder Tisch</small></span></label>
+      <label class="k"><span class="cb" data-feld="knopf_anfrage"></span><span>Anfrage senden<small>Angebote, Aufträge</small></span></label>
+      <label class="k"><span class="cb" data-feld="knopf_beraten"></span><span>Weiß ich nicht<small>Ich empfehle dir etwas</small></span></label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Woran merkst du in einem halben Jahr, dass sich die Website gelohnt hat?</span><div class="f mittel gross" data-feld="erfolg" style="height:56px"></div></div>
+  <div class="unten"><span>Leer lassen ist okay. Was offen ist, klären wir im Gespräch.</span><span>mivisuals.de</span></div>
+</section>
+
+<!-- 03 Kunden -->
+<section class="page">
+  <div class="oben"><span class="marke"><svg class="mark"><use href="#mi"/></svg>MI Visuals · Projekt-Fragebogen</span><span><b>03</b> / 07</span></div>
+  <div class="kapitel"><span class="nr">3</span><h2>Deine Kunden und was dich <span class="accent">besonders</span> macht</h2><p>Hier steckt das Wichtigste: der Grund, warum man zu dir kommt und nicht zum Nachbarn.</p></div>
+  <div class="frage"><span class="l">Wer sind deine Kunden?</span><span class="t">Alter, Familien, Berufstätige, Studierende, Stammkunden, Touristen …</span><div class="f gross" data-feld="kunden" style="height:70px"></div></div>
+  <div class="frage"><span class="l">Was machst du anders oder besser als andere?</span><span class="t">Das, was Stammkunden über dich erzählen. Drei Dinge, die wirklich stimmen und die man zeigen kann.</span><div class="f gross" data-feld="besonders" style="height:92px"></div></div>
+  <div class="frage"><span class="l">Was sollen neue Besucher in einem Satz sofort über dich verstehen?</span><div class="f" data-feld="ein_satz" style="height:44px"></div></div>
+  <div class="frage"><span class="l">Gibt es eine Geschichte hinter dem Betrieb?</span><span class="t">Gründung, Familie, Herkunft, das Haus, der Name …</span><div class="f gross" data-feld="geschichte" style="height:70px"></div></div>
+  <div class="frage"><span class="l">Welche Fragen hörst du von Kunden ständig?</span><span class="t">Die beantwortet die Website dann, bevor jemand anruft.</span><div class="f gross" data-feld="haeufige_fragen" style="height:70px"></div></div>
+  <div class="frage"><span class="l">In welchen Sprachen?</span>
+    <div class="kaesten" style="grid-template-columns:repeat(5,1fr)">
+      <label class="k"><span class="cb" data-feld="sprache_de"></span>Deutsch</label>
+      <label class="k"><span class="cb" data-feld="sprache_en"></span>Englisch</label>
+      <label class="k"><span class="cb" data-feld="sprache_tr"></span>Türkisch</label>
+      <label class="k"><span class="cb" data-feld="sprache_ar"></span>Arabisch</label>
+      <label class="k"><span class="cb" data-feld="sprache_andere"></span>Andere</label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Websites, die dir gefallen (gern auch aus anderen Branchen), und was dir daran gefällt</span><div class="f mittel" data-feld="vorbilder" style="height:60px"></div></div>
+  <div class="unten"><span>Leer lassen ist okay. Was offen ist, klären wir im Gespräch.</span><span>mivisuals.de</span></div>
+</section>
+
+<!-- 04 Inhalte -->
+<section class="page">
+  <div class="oben"><span class="marke"><svg class="mark"><use href="#mi"/></svg>MI Visuals · Projekt-Fragebogen</span><span><b>04</b> / 07</span></div>
+  <div class="kapitel"><span class="nr">4</span><h2>Was gehört auf die <span class="accent">Website?</span></h2><p>Kreuz an, was du brauchst. Den Aufbau schlage ich dir dann passend vor.</p></div>
+  <div class="frage"><span class="l">Bereiche und Seiten</span>
+    <div class="kaesten">
+      <label class="k"><span class="cb" data-feld="seite_start"></span>Startseite</label>
+      <label class="k"><span class="cb" data-feld="seite_karte"></span>Speisekarte / Sortiment</label>
+      <label class="k"><span class="cb" data-feld="seite_leistungen"></span>Leistungen und Preise</label>
+      <label class="k"><span class="cb" data-feld="seite_team"></span>Über uns / Team</label>
+      <label class="k"><span class="cb" data-feld="seite_galerie"></span>Galerie / Arbeiten</label>
+      <label class="k"><span class="cb" data-feld="seite_termin"></span>Termin / Reservierung</label>
+      <label class="k"><span class="cb" data-feld="seite_shop"></span>Shop / Bestellen</label>
+      <label class="k"><span class="cb" data-feld="seite_anfrage"></span>Catering / Anfrage</label>
+      <label class="k"><span class="cb" data-feld="seite_aktuelles"></span>Aktuelles / Angebote</label>
+      <label class="k"><span class="cb" data-feld="seite_jobs"></span>Jobs</label>
+      <label class="k"><span class="cb" data-feld="seite_faq"></span>Häufige Fragen</label>
+      <label class="k"><span class="cb" data-feld="seite_andere"></span>Etwas anderes</label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Deine wichtigsten Leistungen, Produkte oder Gerichte</span><span class="t">Gern mit Preisen. Eine Karte oder Preisliste kannst du auch einfach als Foto oder PDF mitschicken.</span><div class="f gross" data-feld="leistungen" style="height:150px"></div></div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Öffnungszeiten</span><div class="f gross" data-feld="zeiten" style="height:96px"></div></div>
+    <div class="frage"><span class="l">Wer soll auf der Website vorkommen?</span><span class="t">Namen und Rollen, nur mit Einverständnis.</span><div class="f gross" data-feld="team" style="height:78px"></div></div>
+  </div>
+  <div class="frage"><span class="l">Was schafft Vertrauen?</span>
+    <div class="kaesten zwei-sp">
+      <label class="k"><span class="cb" data-feld="vertrauen_bewertungen"></span>Google-Bewertungen zeigen</label>
+      <label class="k"><span class="cb" data-feld="vertrauen_zertifikate"></span>Zertifikate / Meisterbrief / Halal</label>
+      <label class="k"><span class="cb" data-feld="vertrauen_presse"></span>Presse / Auszeichnungen</label>
+      <label class="k"><span class="cb" data-feld="vertrauen_partner"></span>Partner / Lieferanten</label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Gibt es etwas, das auf keinen Fall auf die Website darf?</span><div class="f" data-feld="nicht_zeigen" style="height:44px"></div></div>
+  <div class="unten"><span>Leer lassen ist okay. Was offen ist, klären wir im Gespräch.</span><span>mivisuals.de</span></div>
+</section>
+
+<!-- 05 Stil -->
+<section class="page">
+  <div class="oben"><span class="marke"><svg class="mark"><use href="#mi"/></svg>MI Visuals · Projekt-Fragebogen</span><span><b>05</b> / 07</span></div>
+  <div class="kapitel"><span class="nr">5</span><h2>Wie soll es sich <span class="accent">anfühlen?</span></h2><p>Kein Geschmackstest. Wähl, was am ehesten passt, wenn man durch deine Tür kommt.</p></div>
+  <div class="frage"><span class="l">Welche Richtung passt? <span style="font-weight:400;color:var(--tinte-3)">Bis zu zwei ankreuzen</span></span>
+    <div class="stile">
+      <div class="stil"><div class="v v1"><em>Seit 1952</em><i></i></div><label class="u"><span class="cb" data-feld="stil_klassisch"></span><span>Klassisch<small>Tradition, Ruhe, Handwerk</small></span></label></div>
+      <div class="stil"><div class="v v2"><em>Studio.</em><i></i></div><label class="u"><span class="cb" data-feld="stil_modern"></span><span>Modern und klar<small>Viel Weiß, präzise</small></span></label></div>
+      <div class="stil"><div class="v v3"><em>Herzlich willkommen</em><i></i></div><label class="u"><span class="cb" data-feld="stil_warm"></span><span>Warm und herzlich<small>Familiär, gemütlich</small></span></label></div>
+      <div class="stil"><div class="v v4"><em>Street Food</em><i></i></div><label class="u"><span class="cb" data-feld="stil_mutig"></span><span>Mutig und laut<small>Kontrast, Energie, jung</small></span></label></div>
+      <div class="stil"><div class="v v5"><em>atmen.</em><i></i></div><label class="u"><span class="cb" data-feld="stil_ruhig"></span><span>Ruhig und natürlich<small>Sanft, hell, entspannt</small></span></label></div>
+      <div class="stil"><div class="v v6"><em>Maison</em><i></i></div><label class="u"><span class="cb" data-feld="stil_edel"></span><span>Edel und exklusiv<small>Dunkel, Gold, wenig Worte</small></span></label></div>
+    </div>
+  </div>
+  <div class="frage" style="margin-top:22px"><span class="l">Wo siehst du deinen Betrieb? <span style="font-weight:400;color:var(--tinte-3)">Pro Zeile ein Kästchen</span></span>
+    <div class="skala skala-kopf"><span></span><span>klar</span><span>eher</span><span>mitte</span><span>eher</span><span>klar</span><span></span></div>
+    <div class="skala"><span>traditionell</span><span class="zelle"><span class="cb" data-feld="ton_modern_1"></span></span><span class="zelle"><span class="cb" data-feld="ton_modern_2"></span></span><span class="zelle"><span class="cb" data-feld="ton_modern_3"></span></span><span class="zelle"><span class="cb" data-feld="ton_modern_4"></span></span><span class="zelle"><span class="cb" data-feld="ton_modern_5"></span></span><span class="r">modern</span></div>
+    <div class="skala"><span>ruhig</span><span class="zelle"><span class="cb" data-feld="ton_lebendig_1"></span></span><span class="zelle"><span class="cb" data-feld="ton_lebendig_2"></span></span><span class="zelle"><span class="cb" data-feld="ton_lebendig_3"></span></span><span class="zelle"><span class="cb" data-feld="ton_lebendig_4"></span></span><span class="zelle"><span class="cb" data-feld="ton_lebendig_5"></span></span><span class="r">lebendig</span></div>
+    <div class="skala"><span>bodenständig</span><span class="zelle"><span class="cb" data-feld="ton_exklusiv_1"></span></span><span class="zelle"><span class="cb" data-feld="ton_exklusiv_2"></span></span><span class="zelle"><span class="cb" data-feld="ton_exklusiv_3"></span></span><span class="zelle"><span class="cb" data-feld="ton_exklusiv_4"></span></span><span class="zelle"><span class="cb" data-feld="ton_exklusiv_5"></span></span><span class="r">exklusiv</span></div>
+    <div class="skala"><span>Kunden duzen</span><span class="zelle"><span class="cb" data-feld="ton_sie_1"></span></span><span class="zelle"><span class="cb" data-feld="ton_sie_2"></span></span><span class="zelle"><span class="cb" data-feld="ton_sie_3"></span></span><span class="zelle"><span class="cb" data-feld="ton_sie_4"></span></span><span class="zelle"><span class="cb" data-feld="ton_sie_5"></span></span><span class="r">Kunden siezen</span></div>
+  </div>
+  <div class="frage" style="margin-top:20px"><span class="l">Hast du feste Farben?</span><span class="t">Aus Logo, Schild oder Einrichtung. Ich messe sie später genau aus.</span>
+    <div class="kaesten" style="margin-bottom:8px">
+      <label class="k"><span class="cb" data-feld="farben_ja"></span>Ja, und zwar:</label>
+      <label class="k"><span class="cb" data-feld="farben_vorschlag"></span>Nein, bitte vorschlagen</label>
+      <label class="k"><span class="cb" data-feld="farben_unklar"></span>Weiß nicht</label>
+    </div>
+    <div class="f" data-feld="farben" style="height:38px"></div>
+  </div>
+  <div class="frage"><span class="l">Was möchtest du auf keinen Fall?</span><span class="t">z. B. zu verspielt, Stockfotos, eine bestimmte Farbe …</span><div class="f mittel" data-feld="no_go" style="height:66px"></div></div>
+  <div class="unten"><span>Leer lassen ist okay. Was offen ist, klären wir im Gespräch.</span><span>mivisuals.de</span></div>
+</section>
+
+<!-- 06 Material + Technik -->
+<section class="page">
+  <div class="oben"><span class="marke"><svg class="mark"><use href="#mi"/></svg>MI Visuals · Projekt-Fragebogen</span><span><b>06</b> / 07</span></div>
+  <div class="kapitel"><span class="nr">6</span><h2>Logo, Fotos und <span class="accent">Texte</span></h2><p>Gute Fotos sind der größte Hebel für eine hochwertige Website. Ehrlich ankreuzen hilft beim Planen.</p></div>
+  <div class="frage"><span class="l">Logo</span>
+    <div class="kaesten zwei-sp">
+      <label class="k"><span class="cb" data-feld="logo_datei"></span><span>Als Datei vom Grafiker<small>PDF, SVG, AI oder EPS</small></span></label>
+      <label class="k"><span class="cb" data-feld="logo_bild"></span><span>Nur als Bild oder Foto<small>Ich baue es sauber nach</small></span></label>
+      <label class="k"><span class="cb" data-feld="logo_keins"></span><span>Kein Logo<small>Ich gestalte einen Schriftzug</small></span></label>
+      <label class="k"><span class="cb" data-feld="logo_neu"></span><span>Neues Logo gewünscht<small>Als Zusatzleistung möglich</small></span></label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Fotos und Videos</span>
+    <div class="kaesten zwei-sp">
+      <label class="k"><span class="cb" data-feld="fotos_gut"></span><span>Gute eigene Fotos<small>Scharf, hell, aktuell</small></span></label>
+      <label class="k"><span class="cb" data-feld="fotos_handy"></span><span>Ein paar Handyfotos<small>Ich wähle die besten aus</small></span></label>
+      <label class="k"><span class="cb" data-feld="fotos_shooting"></span><span>Foto- oder Videodreh gewünscht<small>Ich komme vorbei, ohne Aufwand für dich</small></span></label>
+      <label class="k"><span class="cb" data-feld="fotos_keine"></span><span>Noch keine Fotos<small>Wir finden eine Lösung</small></span></label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Texte</span>
+    <div class="kaesten">
+      <label class="k"><span class="cb" data-feld="texte_schreiben"></span>Bitte schreiben, ich lese gegen</label>
+      <label class="k"><span class="cb" data-feld="texte_stichpunkte"></span>Ich liefere Stichpunkte</label>
+      <label class="k"><span class="cb" data-feld="texte_fertig"></span>Texte sind fertig</label>
+    </div>
+  </div>
+
+  <div class="kapitel"><span class="nr">7</span><h2>Domain, Zugänge und <span class="accent">Impressum</span></h2><p>Klingt trocken, spart später Ärger. Alles läuft auf deinen Namen, du bleibst Eigentümer.</p></div>
+  <div class="hinweis">Bitte hier keine Passwörter eintragen. Zugänge richten wir später sicher gemeinsam ein.</div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Domain (www-Adresse), falls vorhanden</span><div class="f" data-feld="domain"></div></div>
+    <div class="frage"><span class="l">Bei welchem Anbieter?</span><div class="f" data-feld="domain_anbieter"></div></div>
+  </div>
+  <div class="frage">
+    <div class="kaesten zwei-sp">
+      <label class="k"><span class="cb" data-feld="zugang_email"></span>E-Mail mit eigener Domain gewünscht</label>
+      <label class="k"><span class="cb" data-feld="zugang_google"></span>Google-Unternehmensprofil vorhanden</label>
+      <label class="k"><span class="cb" data-feld="zugang_google_unklar"></span>Zugang zum Google-Profil unbekannt</label>
+      <label class="k"><span class="cb" data-feld="zugang_buchung"></span>Buchungs- oder Kassensystem vorhanden</label>
+    </div>
+  </div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Rechtsform</span><span class="t">Einzelunternehmen, GbR, e. K., GmbH, UG …</span><div class="f" data-feld="rechtsform"></div></div>
+    <div class="frage"><span class="l">Inhaber / Geschäftsführer</span><span class="t">So, wie es im Gewerbeschein oder Register steht.</span><div class="f" data-feld="inhaber"></div></div>
+  </div>
+  <div class="drei">
+    <div class="frage"><span class="l">Handelsregister</span><div class="f" data-feld="register"></div></div>
+    <div class="frage"><span class="l">USt-IdNr.</span><div class="f" data-feld="ustid"></div></div>
+    <div class="frage"><span class="l">Kammer / Meisterbetrieb</span><div class="f" data-feld="kammer"></div></div>
+  </div>
+  <div class="unten"><span>Leer lassen ist okay. Was offen ist, klären wir im Gespräch.</span><span>mivisuals.de</span></div>
+</section>
+
+<!-- 07 Rahmen + Abschluss -->
+<section class="page">
+  <div class="oben"><span class="marke"><svg class="mark"><use href="#mi"/></svg>MI Visuals · Projekt-Fragebogen</span><span><b>07</b> / 07</span></div>
+  <div class="kapitel"><span class="nr">8</span><h2>Zeitplan und <span class="accent">Pflege</span></h2><p>Fast geschafft. Noch ein paar Eckdaten.</p></div>
+  <div class="zwei">
+    <div class="frage"><span class="l">Bis wann soll die Website online sein?</span><div class="f" data-feld="termin"></div></div>
+    <div class="frage"><span class="l">Gibt es einen Anlass?</span><span class="t" style="display:none"></span><div class="f" data-feld="anlass"></div></div>
+  </div>
+  <div class="frage"><span class="l">Wer pflegt später Änderungen?</span>
+    <div class="kaesten">
+      <label class="k"><span class="cb" data-feld="pflege_mi"></span><span>MI Visuals für mich<small>Kurze Nachricht genügt</small></span></label>
+      <label class="k"><span class="cb" data-feld="pflege_selbst"></span><span>Kleines selbst<small>Zeiten, Preise, Aktionen</small></span></label>
+      <label class="k"><span class="cb" data-feld="pflege_offen"></span><span>Weiß noch nicht<small>Besprechen wir</small></span></label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Budget-Rahmen <span style="font-weight:400;color:var(--tinte-3)">hilft mir, das passende Angebot zu machen</span></span>
+    <div class="kaesten" style="grid-template-columns:repeat(4,1fr)">
+      <label class="k"><span class="cb" data-feld="budget_500"></span>unter 500 €</label>
+      <label class="k"><span class="cb" data-feld="budget_1500"></span>500–1.500 €</label>
+      <label class="k"><span class="cb" data-feld="budget_5000"></span>1.500–5.000 €</label>
+      <label class="k"><span class="cb" data-feld="budget_offen"></span>Noch offen</label>
+    </div>
+  </div>
+  <div class="frage"><span class="l">Sonst noch etwas, das ich wissen sollte?</span><div class="f gross" data-feld="sonstiges" style="height:96px"></div></div>
+  <div class="frage"><label class="k" style="display:inline-flex"><span class="cb" data-feld="foto_ok"></span>Personen auf meinen Fotos sind einverstanden oder werden vorher gefragt.</label></div>
+
+  <div class="danke">
+    <h3>Danke! So geht’s <span class="accent">weiter.</span></h3>
+    <ol>
+      <li><span><b>PDF speichern</b> (am Handy: Teilen → In Dateien sichern) und per E-Mail oder WhatsApp an mich schicken.</span></li>
+      <li><span><b>Logo, Fotos und Preisliste</b> gleich mitschicken, am besten in Originalgröße, nicht als Screenshot.</span></li>
+      <li><span>Ich melde mich innerhalb von <b>24 Stunden</b> für ein kurzes, kostenloses Erstgespräch.</span></li>
+      <li><span>Danach bekommst du ein <b>schriftliches Festangebot</b>, bevor ich anfange.</span></li>
+    </ol>
+    <div class="kontakt"><div><span>E-Mail</span>info@mivisuals.de</div><div><span>WhatsApp</span>+49 152 38086847</div><div><span>Web</span>mivisuals.de</div></div>
+  </div>
+  <div class="unten"><span>MI Visuals · Inh. Malik Ismail</span><span>Deine Angaben nutze ich nur für dein Angebot und dein Projekt.</span></div>
+</section>
+</body>
+</html>

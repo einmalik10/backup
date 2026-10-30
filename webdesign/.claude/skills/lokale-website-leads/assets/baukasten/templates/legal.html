@@ -1,0 +1,42 @@
+{% extends branche_template %}
+{% block title %}{{ legal_title }} – {{ s.name }}{% endblock %}
+{% macro v(val, label) %}{% if val %}{{ val }}{% else %}<mark class="missing">[FEHLT: {{ label }}]</mark>{% endif %}{% endmacro %}
+{% block main %}
+<section>
+  <div class="wrap legal">
+    {% if legal == "impressum" %}
+    <h1>Impressum</h1>
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <p>{{ v(s.impressum.inhaber, "Name des Inhabers / der Inhaberin") }}{% if s.impressum.rechtsform %}<br>{{ s.impressum.rechtsform }}{% endif %}<br>
+      {{ s.name }}<br>{{ s.adresse.strasse }}<br>{{ s.adresse.plz }} {{ s.adresse.ort }}</p>
+    {% if s.impressum.vertreten %}<p>Vertreten durch: {{ s.impressum.vertreten }}</p>{% endif %}
+    {% if s.impressum.register %}<p>{{ s.impressum.register }}</p>{% endif %}
+    <h2>Kontakt</h2>
+    <p>Telefon: {{ s.telefon }}<br>E-Mail: {{ v(s.email, "E-Mail-Adresse (Pflicht)") }}</p>
+    {% if s.impressum.ust_id %}<h2>Umsatzsteuer-ID</h2><p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: {{ s.impressum.ust_id }}</p>{% endif %}
+    {% if s.branche == "praxis" %}
+    <h2>Berufsrechtliche Angaben</h2>
+    <p>Berufsbezeichnung: {{ v(s.impressum.berufsbezeichnung, "z. B. Zahnarzt, verliehen in Deutschland") }}<br>
+      Zuständige Kammer: {{ v(s.impressum.kammer, "z. B. Landeszahnärztekammer Baden-Württemberg") }}<br>
+      Zuständige Aufsichtsbehörde: {{ v(s.impressum.aufsicht, "z. B. Kassen(zahn)ärztliche Vereinigung Baden-Württemberg") }}<br>
+      Berufsrechtliche Regelungen: {{ v(s.impressum.berufsordnung, "Berufsordnung inkl. Link") }}</p>
+    {% endif %}
+    {% if s.impressum.zusatz %}<p>{{ s.impressum.zusatz }}</p>{% endif %}
+    <h2>Verbraucherstreitbeilegung</h2>
+    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    <p class="small" style="margin-top:28px">Website erstellt von {{ s.webdesign or "[Ihr Name]" }}.</p>
+    {% else %}
+    <h1>Datenschutzerklärung</h1>
+    {% if s.datenschutz_html %}{{ s.datenschutz_html | safe }}
+    {% else %}
+    <p class="todo"><b>Vor dem Livegang ersetzen:</b> Datenschutzerklärung mit einem Generator erstellen (z. B. für: Hosting bei {{ s.hosting or "[Hoster]" }}, Kontakt per Telefon/E-Mail/WhatsApp, externe Links zu Buchungs- oder Lieferportalen, keine Cookies, keine Analyse-Tools) und als <code>datenschutz_html</code> in die Kundendatei eintragen.</p>
+    <h2>Verantwortlich</h2>
+    <p>{{ v(s.impressum.inhaber, "Name") }}, {{ s.name }}, {{ s.adresse.strasse }}, {{ s.adresse.plz }} {{ s.adresse.ort }}, E-Mail: {{ v(s.email, "E-Mail") }}</p>
+    <h2>Gut zu wissen</h2>
+    <p>Diese Website setzt keine Cookies, nutzt keine Analyse-Tools und lädt keine Schriften oder Karten von fremden Servern. Links zu Google Maps, Instagram oder Buchungsportalen öffnen erst beim Anklicken die Seite des jeweiligen Anbieters.</p>
+    {% endif %}
+    {% endif %}
+    <p style="margin-top:32px"><a href="index.html">← Zurück zur Startseite</a></p>
+  </div>
+</section>
+{% endblock %}
